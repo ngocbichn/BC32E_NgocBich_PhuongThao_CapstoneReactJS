@@ -1,23 +1,42 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import styled from 'styled-components'
-import Footer from '../molecules/Footer'
-import Header from '../molecules/Header'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+import Footer from "../molecules/Footer";
+import Header from "../molecules/Header";
 
 const MainLayout = () => {
-    return (
-        <Container className='MainLayout'>
-            <Header />
-            <Outlet />
-            <Footer />
-        </Container>
-    )
-}
+  return (
+    <Container className="MainLayout">
+      <Header />
+      <main className="main-content">
+        <Outlet />
+      </main>
+      <Footer />
+    </Container>
+  );
+};
 
-export default MainLayout
+export default MainLayout;
 
 const Container = styled.div`
-    &.MainLayout{
-        max-width: 1280px;
+  &.MainLayout {
+    .Header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 101;
+      background-color: #2b2b31;
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+        rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
-`
+
+    .main-content {
+      flex: 1;
+    }
+
+    .Footer {
+      background-color: #2b2b31;
+    }
+  }
+`;
