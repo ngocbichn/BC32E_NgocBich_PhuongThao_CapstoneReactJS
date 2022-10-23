@@ -1,22 +1,27 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = () => {
   return (
     <Container className="Header">
       <header className="container body-font">
-        <div className="main-content mx-auto flex flex-wrap flex-col md:flex-row items-center">
-          <a
+        <div className="main-content py-20 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+          <NavLink
             className="flex title-font font-medium items-center mb-4 md:mb-0"
-            href="#"
+            to="/home"
           >
             <span className="title ml-3 text-5xl">MOVIE</span>
-          </a>
+          </NavLink>
           <nav className="nav_header md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <a className="mr-28">Home</a>
+            <NavLink className="mr-28" to="/home">
+              Home
+            </NavLink>
             <a className="mr-28">Showing Movie</a>
             <a className="mr-28">Coming Soon</a>
-            <a className="mr-28">Booking</a>
+            <NavLink className="mr-28" to="bookingTicket">
+              Booking
+            </NavLink>
           </nav>
           <button className="btn_login">LOGIN</button>
         </div>
@@ -37,7 +42,6 @@ const Container = styled.div`
       margin: auto;
       box-sizing: border-box;
       .main-content {
-        padding: 30px 0;
       }
       .title {
         font-weight: 700;

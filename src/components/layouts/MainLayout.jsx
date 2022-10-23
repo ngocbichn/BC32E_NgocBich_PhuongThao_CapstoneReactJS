@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../molecules/Footer";
 import Header from "../molecules/Header";
+import HomeLayout from "../pages/userLayout/HomeLayout";
 
 const MainLayout = () => {
   return (

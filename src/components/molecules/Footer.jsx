@@ -112,22 +112,10 @@ const Footer = () => {
                     support@gmail.com
                   </a>
                 </li>
-                <li className="footer_list list_social">
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="media_icon fa-brands fa-facebook"
-                  ></a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="media_icon fa-brands fa-instagram"
-                  ></a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="media_icon fa-brands fa-youtube"
-                  ></a>
+                <li className="list_social">
+                  <a className="media_icon fa-brands fa-facebook"></a>
+                  <a className="media_icon fa-brands fa-instagram"></a>
+                  <a className="media_icon fa-brands fa-youtube"></a>
                 </li>
               </ul>
             </div>
@@ -225,12 +213,16 @@ const Container = styled.div`
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
+      }
+      .list_social {
+        margin-top: 15px;
         .media_icon {
           color: rgba(255, 255, 255, 0.6);
           font-weight: 300;
           font-size: 24px;
           margin-right: 15px;
           transition: 0.4s ease;
+          cursor: pointer;
           &:hover {
             background: -webkit-linear-gradient(
               90deg,

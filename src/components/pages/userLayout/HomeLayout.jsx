@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import img from "../../../assets/images/Banner/bannerMovie.jpg";
+import img from "../../../assets/images/Banner/movieBanner.jpg";
 
 const HomeLayout = () => {
+
   return (
     <Container className="HomeLayout">
       <div className="carousel mb-80">
@@ -10,7 +11,7 @@ const HomeLayout = () => {
       </div>
       <div className="container">
         <div className="new-releases mb-80">
-          <p className="text-34 font-semibold mb-26">New Releases</p>
+          <p className="text-34 font-semibold mb-26">Now Showing</p>
           <section className="text-gray-600 body-font mb-40">
             <div className="container px-5 py-24 mx-auto">
               <div className="flex flex-wrap -m-4">
@@ -613,7 +614,7 @@ const Container = styled.div`
   &.HomeLayout {
     .carousel {
       /* width: 100%; */
-      height: 300px;
+      height: 750px;
       background-image: url(${img});
       background-repeat: no-repeat;
       background-size: 100%;
