@@ -16,7 +16,7 @@ const Routers = () => {
           element: <HomeLayout />,
         },
         {
-          path: "details",
+          path: "details/",
           element: <DetailPage/>
         },
         {

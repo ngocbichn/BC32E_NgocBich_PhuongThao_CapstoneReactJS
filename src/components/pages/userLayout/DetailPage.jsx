@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 const DetailPage = () => {
+    const {movieDetail} = useSelector(state => state.filmManageReducer)
     return (
         <Container className='DetailPage'>
             <div className='container'>
@@ -10,6 +12,26 @@ const DetailPage = () => {
                     <div className='filmDetail my-auto ml-32'>
                         <div className="lg:w-2/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h1 className="text-[40px] title-font text-orange-400 tracking-widest">FILM NAME</h1>
+                            <div>
+                                <div className='flex'>
+                                    <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-7 h-7 " viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-7 h-7 " viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-7 h-7  " viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-7 h-7  " viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-7 h-7  " viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                </div>
+
+                            </div>
                             <p className="filmDesc">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.</p>
                             <div className=" film flex mt-6 items-center pb-5 border-t-2 border-gray-100 mb-5">
                                 <div className="flex mt-24">
@@ -54,23 +76,23 @@ const DetailPage = () => {
                             <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
                             <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
                         </div>
-                        
+
                         <div className=' md:w-1/3 mt-[16px]'>
                             <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
                             <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
                             <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
                             <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
                         </div>
-                        
+
                         <div className=' md:w-1/3 mt-[16px]'>
                             <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
                             <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
                             <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
                             <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
                         </div>
-                        
-                        
-                        
+
+
+
                     </div>
 
 
@@ -110,6 +132,9 @@ margin: auto
       &:hover {
         opacity: 1;
       }
+    }
+    svg {
+        color: #f76b1c
     }
     
 }

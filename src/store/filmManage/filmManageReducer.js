@@ -3,6 +3,7 @@ import { filmManageServices } from '../../services/filmManageServices'
 
 const initialState = {
     movieList: [],
+    movieDetail: undefined,
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
