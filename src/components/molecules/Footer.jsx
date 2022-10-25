@@ -19,7 +19,7 @@ const Footer = () => {
               </a>
             </div>
             <div className="col-span-6 text-center md:text-left md:col-span-3">
-              <p className="list_title pb-1 text-lg font-medium">Resources</p>
+              <p className="list_title pb-1 text-lg font-semibold">Resources</p>
               <ul>
                 <li className="footer_list">
                   <a

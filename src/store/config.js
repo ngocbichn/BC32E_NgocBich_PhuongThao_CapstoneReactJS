@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+// import { combineReducers } from 'redux'
 import thunk from "redux-thunk";
-import { filmManageReducer } from "./filmManage/filmManageReducer";
+import { filmManageReducer } from "./filmManage";
 
 const { combineReducers } = require("redux");
 
@@ -13,3 +14,4 @@ export const store = configureStore({
     middleware: [thunk],
     devTools: true,
 })
+

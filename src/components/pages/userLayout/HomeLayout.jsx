@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../../assets/images/Banner/movieBanner.jpg";
+import { getMovieList } from "../../../store/filmManage/filmManageReducer";
+import { useFilmManage } from "../../../store/filmManage/filmManageSelector";
+import { useQueryUrl } from "../../hooks/useQueryUrl";
+import cn from "classnames";
 
 const HomeLayout = () => {
+  const dispatch = useDispatch();
+  const [searchParam, setSearchParam] = useSearchParams({
+    isShowing: true,
+    isHot: true,
+  });
+  const [query, setQueryUrl] = useQueryUrl({
+    isShowing: true,
+    isHot: true,
+  });
+  const v = useQueryUrl();
+
+  const { movieList, isFetching, error } = useFilmManage();
+
+  useEffect(() => {
+    dispatch(getMovieList());
+  }, []);
 
   return (
     <Container className="HomeLayout">
@@ -10,325 +32,69 @@ const HomeLayout = () => {
         <div className="overlay"></div>
       </div>
       <div className="container">
-        <div className="new-releases mb-80">
-          <p className="text-34 font-semibold mb-26">Now Showing</p>
-          <section className="text-gray-600 body-font mb-40">
-            <div className="container px-5 py-24 mx-auto">
-              <div className="flex flex-wrap -m-4">
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/420x260"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-semibold tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/421x261"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/422x262"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/423x263"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/424x264"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/425x265"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/427x267"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-                  <a className="block relative h-48 rounded overflow-hidden">
-                    <img
-                      alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
-                      src="https://dummyimage.com/428x268"
-                    />
-                  </a>
-                  <div className="mt-4">
-                    <h3 className="text-white text-20 font-medium tracking-widest title-font mb-1">
-                      Movie Name
-                    </h3>
-                    <span className="mt-1 fa-solid fa-star rating_icon"></span>
-                    <span className="ml-5 font-medium text-18 text-white rating_point">
-                      8.5
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <div className="text-center">
-            <button className="btn-viewAll">View All</button>
+        <div className="mb-80">
+          <div className="btn-movieList mb-30">
+            <Button
+              className={cn({
+                active: searchParam.get("isShowing") === "true",
+              })}
+              onClick={() => {
+                setQueryUrl({
+                  isShowing: true,
+                });
+              }}
+            >
+              Now Showing
+            </Button>
+            <Button
+              className={cn("ms-3", {
+                active: searchParam.get("isShowing") === "false",
+              })}
+              onClick={() => {
+                setQueryUrl({
+                  isShowing: false,
+                });
+              }}
+            >
+              Coming Soon
+            </Button>
           </div>
-        </div>
-        <div className="comming-soon mb-120">
-          <p className="text-34 font-semibold mb-26">Coming Soon</p>
-          <section className="text-gray-600 body-font">
-            <div className="container px-5 py-24 mx-auto">
+          <section className="mb-40">
+            <div className="container mx-auto">
               <div className="flex flex-wrap -m-4">
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/720x400"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Chichen Itza
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/721x401"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Colosseum Roma
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/722x402"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Great Pyramid of Giza
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/723x403"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      San Francisco
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap -m-4 mt-10">
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/720x400"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Chichen Itza
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/721x401"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Colosseum Roma
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/722x402"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      Great Pyramid of Giza
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
-                <div className="movie-card xl:w-1/4 md:w-1/2 p-4">
-                  <div className="bg-gray-100 p-16 rounded-lg">
-                    <img
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="https://dummyimage.com/723x403"
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest  text-xs font-medium title-font">
-                      SUBTITLE
-                    </h3>
-                    <h2 className="movie-name text-20 text-gray-900 font-semibold title-font mb-4">
-                      San Francisco
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
-                  </div>
-                </div>
+                {movieList
+                  .filter(
+                    (item) => item.sapChieu.toString() === query.isShowing
+                  )
+                  .map((film) => (
+                    <div
+                      key={film.maPhim}
+                      className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16"
+                    >
+                      <div className="relative h-96 rounded overflow-hidden">
+                        <img
+                          alt={film.maPhim}
+                          className="object-cover object-center w-full h-full block"
+                          src={film.hinhAnh}
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <h3 className="text-white text-20 font-semibold mb-1">
+                          {film.tenPhim}
+                        </h3>
+                        <span className="mt-1 fa-solid fa-star rating_icon"></span>
+                        <span className="ml-5 font-medium text-18 rating_point">
+                          ({film.danhGia}/10)
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+
               </div>
             </div>
           </section>
         </div>
+
         <div className="movie-schedule mb-80">
           {/* <div className="cinema-info mb-50">
             <div className="flex justify-center gap-16">
@@ -636,10 +402,15 @@ const Container = styled.div`
     }
     .container {
       max-width: 1280px;
-      padding: 0 35px;
+      padding: 0 25px;
       margin: auto;
       box-sizing: border-box;
       .rating_icon {
+        background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .rating_point {
         background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -649,24 +420,31 @@ const Container = styled.div`
           color: #f76b1c;
         }
       }
-      .movie-shedule {
+      .movie-schedule {
         border-color: rgba(255, 255, 255, 0.75);
       }
     }
-    button {
-      background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-      height: 50px;
-      width: 150px;
-      border-radius: 4px;
-      box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);
-      opacity: 0.85;
-      transition: 0.4s ease;
-      &:hover {
-        opacity: 1;
-      }
-    }
+  }
+`;
+
+const Button = styled.button`
+  background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  height: 50px;
+  width: 150px;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);
+  opacity: 0.45;
+  margin-right: 20px;
+  transition: 0.4s ease;
+  &:hover {
+    opacity: 0.85;
+  }
+  &.active {
+    background-image: linear-gradient(90deg, #ffc800 0%, #ff5e00 100%);
+    color: #fff;
+    opacity: 1;
   }
 `;
