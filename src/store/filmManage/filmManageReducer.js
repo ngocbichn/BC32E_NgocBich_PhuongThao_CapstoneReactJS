@@ -5,6 +5,8 @@ const initialState = {
     movieList: [],
     isFetching: false,
     error: undefined,
+    isFetchingMD: false,
+    movieDetail: undefined,
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
@@ -14,6 +16,7 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
     },
     extraReducers: (builder) => {
         builder
+        //getmovielist
             .addCase(getMovieList.pending, (state, action) => {
                 state.isFetching = true
             })
@@ -25,6 +28,20 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
                 state.error = action.payload
                 state.isFetching = false
             })
+        //getmoviedetail
+        .addCase(getMovieDetail.pending,(state,action) => {
+            state.isFetchingMD = true
+        })
+        .addCase(getMovieDetail.fulfilled, (state,action) => {
+            state.isFetchingMD = false
+           state.movieDetail= action.payload
+            
+        })
+        .addCase(getMovieDetail.rejected, (state,action) => {
+            state.isFetchingMD = false
+            state.error = action.payload
+          
+        })
     },
 })
 
@@ -32,7 +49,7 @@ export const getMovieList = createAsyncThunk(
     'filmManage/getMovieList',
     async (data, { dispatch, getState, rejectWithValue }) => {
         try {
-            // const value = getState().filmManageReducer
+            const value = getState().filmManageReducer
             const result = await filmManageServices.getMovieList()
             return result.data.content
         } catch (error) {
@@ -40,3 +57,15 @@ export const getMovieList = createAsyncThunk(
         }
     }
 )
+
+export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async(movieId, {dispatch,getState,rejectWithValue})=> {
+    try {
+        const result = await filmManageServices.getMovieDetail(movieId)
+        return result.data.content
+        
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+        
+    }
+
+})

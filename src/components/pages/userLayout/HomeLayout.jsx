@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../../assets/images/Banner/movieBanner.jpg";
 import { getMovieList } from "../../../store/filmManage/filmManageReducer";
@@ -20,8 +20,10 @@ const HomeLayout = () => {
   });
   const v = useQueryUrl();
 
-  const { movieList, isFetching, error } = useFilmManage();
+  const navigate = useNavigate()
 
+  const { movieList, isFetching, error } = useFilmManage();
+  console.log(isFetching);
   useEffect(() => {
     dispatch(getMovieList());
   }, []);
@@ -69,19 +71,19 @@ const HomeLayout = () => {
                   .map((film) => (
                     <div
                       key={film.maPhim}
-                      className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16"
+                      className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16" 
                     >
                       <div className="relative h-96 rounded overflow-hidden">
-                        <img
+                        <img style={{cursor: 'pointer'}}
                           alt={film.maPhim}
                           className="object-cover object-center w-full h-full block"
-                          src={film.hinhAnh}
+                          src={film.hinhAnh} onClick={() => {navigate(`/details/${film.maPhim}`)}}
                         />
                       </div>
                       <div className="mt-4">
-                        <h3 className="text-white text-20 font-semibold mb-1">
+                        <H3 style={{cursor: 'pointer'}} className=" filmName text-white text-20 font-semibold mb-1" onClick={() => {navigate(`/details/${film.maPhim}`)}}>
                           {film.tenPhim}
-                        </h3>
+                        </H3>
                         <span className="mt-1 fa-solid fa-star rating_icon"></span>
                         <span className="ml-5 font-medium text-18 rating_point">
                           ({film.danhGia}/10)
@@ -448,3 +450,13 @@ const Button = styled.button`
     opacity: 1;
   }
 `;
+
+const H3 = styled.h3`
+  &.filmName {
+    &:hover {
+      background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+  }
+`
