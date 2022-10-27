@@ -23,7 +23,8 @@ const Header = () => {
               Booking
             </NavLink>
           </nav>
-          <button className="btn_login">LOGIN</button>
+          <Button className="btn_login">LOGIN</Button>
+          <Button className="btn_signUp">SIGN UP</Button>
         </div>
       </header>
 
@@ -36,6 +37,7 @@ export default Header;
 
 const Container = styled.div`
   &.Header {
+    
     .container {
       max-width: 1280px;
       padding: 0 35px;
@@ -45,6 +47,7 @@ const Container = styled.div`
       }
       .title {
         font-weight: 700;
+        color: #fff !important;
       }
       .nav_header {
         a {
@@ -63,21 +66,23 @@ const Container = styled.div`
           }
         }
       }
-      button {
-        background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
-        color: #fff;
-        font-weight: 600;
-        font-size: 14px;
-        height: 50px;
-        width: 150px;
-        border-radius: 4px;
-        box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);
-        opacity: 0.85;
-        transition: 0.4s ease;
-        &:hover {
-          opacity: 1;
-        }
-      }
     }
+  }
+`;
+
+const Button = styled.button`
+  background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  height: 50px;
+  width: 130px;
+  margin-right: 15px;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);
+  opacity: 0.85;
+  transition: 0.4s ease;
+  &:hover {
+    opacity: 1;
   }
 `;

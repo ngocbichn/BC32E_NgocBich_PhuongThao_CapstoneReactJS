@@ -124,10 +124,10 @@ const Footer = () => {
             <div className="flex flex-col self-center text-sm text-center md:block lg:col-start-1 md:space-x-6">
               <span>©2022 All rights reserved</span>
               <a rel="noopener noreferrer" href="#">
-                <span>Privacy policy</span>
+                <span className="text-white">Privacy policy</span>
               </a>
               <a rel="noopener noreferrer" href="#">
-                <span>Terms of service</span>
+                <span className="text-white">Terms of service</span>
               </a>
             </div>
             {/* <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
@@ -196,10 +196,15 @@ const Container = styled.div`
       margin: auto;
       box-sizing: border-box;
 
+      .col-span-6{
+        text-align: left !important;
+      }
+
       .brand_name {
         background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        color: #fff !important;
       }
 
       .list_title {
@@ -212,6 +217,9 @@ const Container = styled.div`
           background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+        }
+        a{
+          color: #fff !important;
         }
       }
       .list_social {

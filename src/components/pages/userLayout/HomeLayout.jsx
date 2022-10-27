@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../../assets/images/Banner/movieBanner.jpg";
 import { getMovieList } from "../../../store/filmManage/filmManageReducer";
 import { useFilmManage } from "../../../store/filmManage/filmManageSelector";
 import { useQueryUrl } from "../../hooks/useQueryUrl";
 import cn from "classnames";
+import { useCinemaManage } from "../../../store/filmManage/cinemaManageSelector";
+import { getCinemaInfo } from "../../../store/filmManage/cinemaManageReducer";
+import { Tabs, TabPane, Radio, Space } from "antd";
+import moment from "moment";
 
 const HomeLayout = () => {
   const dispatch = useDispatch();
@@ -20,13 +24,110 @@ const HomeLayout = () => {
   });
   const v = useQueryUrl();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { movieList, isFetching, error } = useFilmManage();
-  console.log(isFetching);
+  // console.log('isFetching movieList', isFetching);
+  // console.log('movieList', movieList)
   useEffect(() => {
     dispatch(getMovieList());
   }, []);
+
+  const { cinemaInfo, isFetchingCinema } = useCinemaManage();
+  console.log("cinemaInfo", cinemaInfo);
+  console.log("isFetchingCinema", isFetchingCinema);
+  useEffect(() => {
+    dispatch(getCinemaInfo());
+  }, []);
+
+  const [tabPosition, setTabPosition] = useState("left");
+  const changeTabPosition = (e) => {
+    setTabPosition(e.target.value);
+  };
+
+  const renderHeThongRap = () => {
+    return cinemaInfo?.map((heThongRap, index) => {
+      return (
+        <Tabs.TabPane
+          tab={
+            <img
+              src={heThongRap.logo}
+              className="rounded-full ring-2 ring-offset-4"
+              width="50px"
+              height="50px"
+            />
+          }
+          key={index}
+        >
+          <Tabs tabPosition={tabPosition}>
+            {heThongRap.lstCumRap?.map((cumRap, index) => {
+              return (
+                <Tabs.TabPane
+                  tab={
+                    <div className="text-left" style={{ width: "300px" }}>
+                      <img
+                        src={heThongRap.hinhAnh}
+                        width="150px"
+                        height="150px"
+                      />
+                      <p className="text-white font-semibold mt-20">
+                        {cumRap.tenCumRap}
+                      </p>
+                      <p className="text-white">{cumRap.diaChi}</p>
+                    </div>
+                  }
+                  key={index}
+                >
+                  {cumRap.danhSachPhim.map((film, index) => {
+                    return (
+                      <div
+                        className="flex flex-row justify-start border-b-2 dark:border-gray-800 mb-30 pb-30"
+                        key={index}
+                      >
+                        <div className="w-1/4">
+                          <img
+                            src={film.hinhAnh}
+                            width="150px"
+                            height="250px"
+                            alt={film.tenPhim}
+                          />
+                        </div>
+                        <div className="w-3/4">
+                          <p
+                            className="font-semibold text-34"
+                            style={{ color: "#fad961" }}
+                          >
+                            {film.tenPhim}
+                          </p>
+                          <div className="grid grid-cols-5 gap-3">
+                            {film.lstLichChieuTheoPhim
+                              ?.slice(0, 12)
+                              .map((lichChieu, index) => {
+                                return (
+                                  <NavLink
+                                    to="/"
+                                    key={index}
+                                    className="text-white"
+                                  >
+                                    {moment(lichChieu.ngayChieuGioChieu).format(
+                                      "hh:mm A"
+                                    )}
+                                  </NavLink>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Tabs.TabPane>
+              );
+            })}
+          </Tabs>
+        </Tabs.TabPane>
+      );
+    });
+  };
 
   return (
     <Container className="HomeLayout">
@@ -34,7 +135,7 @@ const HomeLayout = () => {
         <div className="overlay"></div>
       </div>
       <div className="container">
-        <div className="mb-80">
+        <div className="movie_list mb-80">
           <div className="btn-movieList mb-30">
             <Button
               className={cn({
@@ -61,7 +162,7 @@ const HomeLayout = () => {
               Coming Soon
             </Button>
           </div>
-          <section className="mb-40">
+          <section className="movie_list_content mb-40">
             <div className="container mx-auto">
               <div className="flex flex-wrap -m-4">
                 {movieList
@@ -71,17 +172,27 @@ const HomeLayout = () => {
                   .map((film) => (
                     <div
                       key={film.maPhim}
-                      className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16" 
+                      className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16"
                     >
                       <div className="relative h-96 rounded overflow-hidden">
-                        <img style={{cursor: 'pointer'}}
-                          alt={film.maPhim}
+                        <img
+                          style={{ cursor: "pointer" }}
+                          alt={film.tenPhim}
                           className="object-cover object-center w-full h-full block"
-                          src={film.hinhAnh} onClick={() => {navigate(`/details/${film.maPhim}`)}}
+                          src={film.hinhAnh}
+                          onClick={() => {
+                            navigate(`/details/${film.maPhim}`);
+                          }}
                         />
                       </div>
                       <div className="mt-4">
-                        <H3 style={{cursor: 'pointer'}} className=" filmName text-white text-20 font-semibold mb-1" onClick={() => {navigate(`/details/${film.maPhim}`)}}>
+                        <H3
+                          style={{ cursor: "pointer" }}
+                          className=" filmName text-white text-20 font-semibold mb-1"
+                          onClick={() => {
+                            navigate(`/details/${film.maPhim}`);
+                          }}
+                        >
                           {film.tenPhim}
                         </H3>
                         <span className="mt-1 fa-solid fa-star rating_icon"></span>
@@ -91,285 +202,14 @@ const HomeLayout = () => {
                       </div>
                     </div>
                   ))}
-
               </div>
             </div>
           </section>
         </div>
 
         <div className="movie-schedule mb-80">
-          {/* <div className="cinema-info mb-50">
-            <div className="flex justify-center gap-16">
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-              <img
-                alt=""
-                className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500"
-                src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-              />
-            </div>
-          </div> */}
-          <div className="cinema-menu">
-            <section className="dark:bg-gray-800 dark:text-gray-100">
-              <div className="container flex mx-auto lg:flex-row gap-40">
-                <div className="w-full lg:w-1/3 border-r-2 pr-20">
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">BHD Star</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">Lotte Cinema</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">BHD Star</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">BHD Star</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">BHD Star</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex justify-center space-x-3 mb-18">
-                    <img
-                      alt=""
-                      className="w-50 h-50 rounded-full ring-2 ring-offset-4 mr-10 dark:bg-gray-500 mr-14"
-                      src="https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/logo.png"
-                    />
-                    <div>
-                      <p className="font-semibold text-24">BHD Star</p>
-                      <p className="text-sm leading-tight dark:text-gray-300">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit.
-                      </p>
-                      <a
-                        className="flex items-center py-2 space-x-1 text-sm dark:text-violet-400"
-                        href="/"
-                      >
-                        <span>Read full story</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col w-full p-6 lg:w-2/3 md:p-8 lg:p-12 gap-30">
-                  <div className="schedule-detail flex gap-20">
-                    <div className="movie-poster">
-                      <img
-                        alt=""
-                        className="w-100 h-200 dark:bg-gray-500"
-                        src="https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/t/ttp_700x1000_kc_14.10.2022_1_.jpg"
-                      />
-                    </div>
-                    <div className="movie-desc">
-                      <h2 className="text-3xl font-semibold">
-                        All kinds of problems
-                      </h2>
-                      <div className="mt-10 mb-14">
-                        <span className="text-sm mr-20">120 mins</span>
-                        <span className="text-sm mr-20">English</span>
-                        <span className="text-sm mr-20">14/10/2022</span>
-                      </div>
-                      <div className="">
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          13:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          15:30
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          18:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          20:15
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          22:30
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="schedule-detail flex gap-20">
-                    <div className="movie-poster">
-                      <img
-                        alt=""
-                        className="w-100 h-200 dark:bg-gray-500"
-                        src="https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/t/ttp_700x1000_kc_14.10.2022_1_.jpg"
-                      />
-                    </div>
-                    <div className="movie-desc">
-                      <h2 className="text-3xl font-semibold">
-                        All kinds of problems
-                      </h2>
-                      <div className="mt-10 mb-14">
-                        <span className="text-sm mr-20">120 mins</span>
-                        <span className="text-sm mr-20">English</span>
-                        <span className="text-sm mr-20">14/10/2022</span>
-                      </div>
-                      <div className="">
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          13:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          15:30
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          18:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          20:15
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          22:30
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="schedule-detail flex gap-20">
-                    <div className="movie-poster">
-                      <img
-                        alt=""
-                        className="w-100 h-200 dark:bg-gray-500"
-                        src="https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/t/ttp_700x1000_kc_14.10.2022_1_.jpg"
-                      />
-                    </div>
-                    <div className="movie-desc">
-                      <h2 className="text-3xl font-semibold">
-                        All kinds of problems
-                      </h2>
-                      <div className="mt-10 mb-14">
-                        <span className="text-sm mr-20">120 mins</span>
-                        <span className="text-sm mr-20">English</span>
-                        <span className="text-sm mr-20">14/10/2022</span>
-                      </div>
-                      <div className="">
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          13:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          15:30
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          18:10
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          20:15
-                        </span>
-                        <span className="text-orange-400 font-semibold text-24 mr-20">
-                          22:30
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
+          <Tabs tabPosition={tabPosition}>{renderHeThongRap()}</Tabs>
+
         </div>
       </div>
     </Container>
@@ -426,7 +266,7 @@ const Container = styled.div`
         border-color: rgba(255, 255, 255, 0.75);
       }
     }
-  }
+    
 `;
 
 const Button = styled.button`
@@ -455,8 +295,8 @@ const H3 = styled.h3`
   &.filmName {
     &:hover {
       background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
-`
+`;
