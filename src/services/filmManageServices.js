@@ -6,7 +6,10 @@ export const filmManageServices = {
     },
 
     getMovieDetail: (movieId) => {
-        return api.get(`QuanLyPhim/LayThongTinPhim?MaPhim=${movieId}`)
-    }
+        return api.get(`QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${movieId}`)
+    },
+    // getMovieSchedulebyId: (movieId) => {
+    //     return api.get(`QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${movieId}`)
+    // }
 }
 
