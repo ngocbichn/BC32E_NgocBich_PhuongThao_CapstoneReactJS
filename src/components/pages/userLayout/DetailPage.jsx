@@ -20,7 +20,7 @@ const DetailPage = () => {
         dispatch(getMovieDetail(param.movieId))
     }, [])
     const { movieDetail, isFetchingMD } = useFilmManage()
-    // console.log('moviedetail', movieDetail, 'isFetchingMD', isFetchingMD)
+    console.log('moviedetail', movieDetail, 'isFetchingMD', isFetchingMD)
     return (
         <Container className='DetailPage'>
             <div className='container'>
@@ -72,6 +72,7 @@ const DetailPage = () => {
                     <div>
                         <Tabs style={{ color: '#fffff' }}
                             tabPosition={tabPosition}
+                            // thay cái array bằng cái mảng sẽ lấy về từ api, thay hình và tên rạp về
                             items={new Array(3).fill(null).map((_, i) => {
                                 const id = String(i + 1);
                                 return {

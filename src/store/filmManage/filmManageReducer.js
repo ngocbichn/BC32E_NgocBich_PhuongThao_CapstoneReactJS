@@ -46,19 +46,19 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
         })
 
         // getMovieSchedulebyId
-        .addCase(getMovieSchedulebyId.pending,(state,action) => {
-            state.isFetchingSchedule = true
-        })
-        .addCase(getMovieSchedulebyId.fulfilled,(state,action) => {
-            state.isFetchingSchedule = false
-            state.movieSchedule = action.payload
+        // .addCase(getMovieSchedulebyId.pending,(state,action) => {
+        //     state.isFetchingSchedule = true
+        // })
+        // .addCase(getMovieSchedulebyId.fulfilled,(state,action) => {
+        //     state.isFetchingSchedule = false
+        //     state.movieSchedule = action.payload
 
-        })
-        .addCase(getMovieSchedulebyId.rejected,(state,action) => {
-            state.isFetchingSchedule = false
-            state.movieSchedule = action.payload
+        // })
+        // .addCase(getMovieSchedulebyId.rejected,(state,action) => {
+        //     state.isFetchingSchedule = false
+        //     state.movieSchedule = action.payload
 
-        })
+        // })
     }
 })
 
@@ -87,13 +87,13 @@ export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async
 
 })
 
-export const getMovieSchedulebyId = createAsyncThunk('filmMange/getMovieSchedulebyId', async(movieId,{dispatch,getState,rejectWithValue}) => {
-    try {
-        const result = await filmManageServices.getMovieSchedulebyId(movieId)
-        return result.data.content
+// export const getMovieSchedulebyId = createAsyncThunk('filmMange/getMovieSchedulebyId', async(movieId,{dispatch,getState,rejectWithValue}) => {
+//     try {
+//         const result = await filmManageServices.getMovieSchedulebyId(movieId)
+//         return result.data.content
         
-    } catch (error) {
-        return rejectWithValue(error.response.data)
+//     } catch (error) {
+//         return rejectWithValue(error.response.data)
         
-    }
-})
+//     }
+// })
