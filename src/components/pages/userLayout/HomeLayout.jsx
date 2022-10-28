@@ -167,7 +167,7 @@ const HomeLayout = () => {
               <div className="flex flex-wrap -m-4">
                 {movieList
                   .filter(
-                    (item) => item.sapChieu.toString() === query.isShowing
+                    (item) => item.sapChieu?.toString() === query.isShowing
                   )
                   .map((film) => (
                     <div

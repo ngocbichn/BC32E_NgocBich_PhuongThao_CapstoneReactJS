@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { getMovieDetail } from '../../../store/filmManage/filmManageReducer'
 import { useFilmManage } from '../../../store/filmManage/filmManageSelector'
@@ -21,7 +21,8 @@ const DetailPage = () => {
         dispatch(getMovieDetail(param.movieId))
     }, [])
     const { movieDetail, isFetchingMD } = useFilmManage()
-    console.log('moviedetail', movieDetail, 'isFetchingMD', isFetchingMD)
+    console.log('heThongRapChieu',movieDetail?.heThongRapChieu)
+    const navigate = useNavigate()
     return (
         <Container className='DetailPage'>
             <div className='container'>
@@ -73,23 +74,74 @@ const DetailPage = () => {
 
                 <div className='filmSchedule lg:pl-10'>
                     <h2 className=' mt-[40px] font-bold text-[40px] text-orange-400 text-center'>LỊCH CHIẾU</h2>
-                    <div>
-                        <Tabs style={{ color: '#fffff' }}
-                            tabPosition={tabPosition}
-                            // thay cái array bằng cái mảng sẽ lấy về từ api, thay hình và tên rạp về
-                            items={new Array(3).fill(null).map((_, i) => {
-                                const id = String(i + 1);
-                                return {
-                                    label: `ABC ${id}`,
-                                    key: id,
-                                    children: `Content of Tab ${id}`,
-                                };
+                   
+                        <div >
+                            <Tabs defaultActiveKey="1" centered >
+                                <Tabs.TabPane tab="Lịch Chiếu" key="1">
+                                    <Tabs defaultActiveKey="1" tabPosition='left'>
+                                        {movieDetail?.heThongRapChieu.map((tenRap,index) => {
+                                return (
+                                    <Tabs.TabPane tab={
+                                        <div> 
+                                            <img className='w-[50px] h-[50px]' src={tenRap.logo} alt="" />
+                                            <div className='mt-4'> {tenRap.tenHeThongRap}</div>
+                                           
+                                        </div>
+                                    } key={index}>
+                                    
+                                        {tenRap.cumRapChieu.map((cumRap,index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <div className='flex flex-wrap'>
+                                                    <img className='w-[60px]' src={cumRap.hinhAnh} alt="" />
+                                                    <div className='text-gray-400 ml-[14px]'>
+                                                    <p className='text-3xl mb-1'>{cumRap.tenCumRap}</p>
+                                                    <p>{cumRap.diaChi}</p> 
+                                                    </div>
+                                                  
+                                                    </div >
+                                                    <div className='grid grid-cols-6'>
+                                                    {cumRap.lichChieuPhim.slice(0,12).map((lichChieu,index) => {
+                                                       return (
+                                                           <div key={index}>
+                                                               Suất chiếu: 
+                                                               <p> {moment(lichChieu.ngayChieuGioChieu).format('DD-MM-YY: hh:mm:ss')}</p>
+                                                           </div>
+                                                       )
+
+                                                   })}
+                                                   </div>
+                                                    
+
+                                                </div>
+                                            )
+
+                                        })
+
+                                        }
+                                    
+                                </Tabs.TabPane>
+                                )
                             })}
-                        />
+                                    </Tabs>
+                                </Tabs.TabPane>
+                                <Tabs.TabPane tab="Thông Tin" key="2">
+                                    Content of Tab Pane 2
+                                </Tabs.TabPane>
+                                <Tabs.TabPane tab="Đánh Giá" key="3">
+                                    Content of Tab Pane 3
+                                </Tabs.TabPane>
+                            </Tabs>
 
 
-                    </div>
-                    <div className='grid grid-cols-12'></div>
+
+
+
+                        </div>
+                   
+
+
+                    {/* <div className='grid grid-cols-12'></div>
                     <div className='scheduleDetail flex flex-wrap' >
                         <div className='flex flex-wrap w-1/2'>
                             <div className=' items-center flex w-full'>
@@ -138,7 +190,7 @@ const DetailPage = () => {
 
                         </div>
 
-                    </div>
+                    </div> */}
 
 
 
@@ -181,6 +233,11 @@ margin: auto
     .ant-tabs {
         color: #ffffff;
         margin-bottom: 24px
+    }
+    .tabLichChieu {
+        background-color: #ffffff;
+        opacity: 0.2;
+        height: 300px
     }
    
     

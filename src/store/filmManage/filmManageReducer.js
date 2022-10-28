@@ -87,7 +87,7 @@ export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async
 
 })
 
-// export const getMovieSchedulebyId = createAsyncThunk('filmMange/getMovieSchedulebyId', async(movieId,{dispatch,getState,rejectWithValue}) => {
+// export const createMovieSchedule = createAsyncThunk('filmMange/getMovieSchedulebyId', async(movieId,{dispatch,getState,rejectWithValue}) => {
 //     try {
 //         const result = await filmManageServices.getMovieSchedulebyId(movieId)
 //         return result.data.content
