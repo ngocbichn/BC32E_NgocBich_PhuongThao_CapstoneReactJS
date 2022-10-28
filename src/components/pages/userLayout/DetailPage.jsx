@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { getMovieDetail } from '../../../store/filmManage/filmManageReducer'
 import { useFilmManage } from '../../../store/filmManage/filmManageSelector'
 import { Radio, Space, Tabs } from 'antd';
+import moment from 'moment'
 
 
 const DetailPage = () => {
@@ -50,10 +51,13 @@ const DetailPage = () => {
                                 </div>
 
                             </div>
-                            <p className="filmDesc">{movieDetail?.moTa}</p>
+                            <p className='text-black-400 mt-4'>Ngày chiếu: {moment(movieDetail?.ngayKhoiChieu).format('DD - MM - YYYY')}</p>
+                            <p className="filmDesc"> Mô tả: <br />{movieDetail?.moTa}</p>
                             <div className=" film flex mt-6 items-center pb-5 border-t-2 border-gray-100 mb-5">
                                 <div className="flex mt-24">
-                                    <button className="mr-24">Trailer</button>
+                                    <button className="mr-24" onClick={() => {
+                                        console.log('hello')
+                                    }}> Trailer </button>
                                     <button className="btnBooking" >Đặt vé</button>
 
                                 </div>
