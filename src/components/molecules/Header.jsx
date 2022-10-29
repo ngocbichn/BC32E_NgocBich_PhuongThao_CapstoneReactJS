@@ -14,11 +14,11 @@ const Header = () => {
             <span className="title ml-3 text-5xl">MOVIE</span>
           </NavLink>
           <nav className="nav_header md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <NavLink className="mr-28" to="/home">
+            <NavLink className="mr-28" to="home">
               Home
             </NavLink>
-            <a className="mr-28">Showing Movie</a>
-            <a className="mr-28">Coming Soon</a>
+            <NavLink className="mr-28" to="home">Showing Movie</NavLink>
+            <NavLink className="mr-28" to="home">Coming Soon</NavLink>
             <NavLink className="mr-28" to="bookingTicket">
               Booking
             </NavLink>
