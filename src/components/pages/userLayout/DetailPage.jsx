@@ -21,8 +21,9 @@ const DetailPage = () => {
         dispatch(getMovieDetail(param.movieId))
     }, [])
     const { movieDetail, isFetchingMD } = useFilmManage()
-    console.log('heThongRapChieu',movieDetail?.heThongRapChieu)
+    console.log('heThongRapChieu', movieDetail)
     const navigate = useNavigate()
+
     return (
         <Container className='DetailPage'>
             <div className='container'>
@@ -74,123 +75,74 @@ const DetailPage = () => {
 
                 <div className='filmSchedule lg:pl-10'>
                     <h2 className=' mt-[40px] font-bold text-[40px] text-orange-400 text-center'>LỊCH CHIẾU</h2>
-                   
-                        <div >
-                            <Tabs defaultActiveKey="1" centered >
-                                <Tabs.TabPane tab="Lịch Chiếu" key="1">
-                                    <Tabs defaultActiveKey="1" tabPosition='left'>
-                                        {movieDetail?.heThongRapChieu.map((tenRap,index) => {
-                                return (
-                                    <Tabs.TabPane tab={
-                                        <div> 
-                                            <img className='w-[50px] h-[50px]' src={tenRap.logo} alt="" />
-                                            <div className='mt-4'> {tenRap.tenHeThongRap}</div>
-                                           
-                                        </div>
-                                    } key={index}>
-                                    
-                                        {tenRap.cumRapChieu.map((cumRap,index) => {
-                                            return (
-                                                <div key={index}>
-                                                    <div className='flex flex-wrap'>
-                                                    <img className='w-[60px]' src={cumRap.hinhAnh} alt="" />
-                                                    <div className='text-gray-400 ml-[14px]'>
-                                                    <p className='text-3xl mb-1'>{cumRap.tenCumRap}</p>
-                                                    <p>{cumRap.diaChi}</p> 
-                                                    </div>
-                                                  
-                                                    </div >
-                                                    <div className='grid grid-cols-6'>
-                                                    {cumRap.lichChieuPhim.slice(0,12).map((lichChieu,index) => {
-                                                       return (
-                                                           <div key={index}>
-                                                               Suất chiếu: 
-                                                               <p> {moment(lichChieu.ngayChieuGioChieu).format('DD-MM-YY: hh:mm:ss')}</p>
-                                                           </div>
-                                                       )
 
-                                                   })}
-                                                   </div>
-                                                    
+                    <div >
+                        <Tabs defaultActiveKey="1" centered >
+                            <Tabs.TabPane tab="Lịch Chiếu" key="1">
+                                <Tabs defaultActiveKey="1" tabPosition='left'>
+                                    {movieDetail?.heThongRapChieu.map((tenRap, index) => {
+                                        return (
+                                            <Tabs.TabPane tab={
+                                                <div>
+                                                    <img className='w-[50px] h-[50px]' src={tenRap.logo} alt="" />
+                                                    <div className='mt-4'> {tenRap.tenHeThongRap}</div>
 
                                                 </div>
-                                            )
+                                            } key={index}>
 
-                                        })
+                                                {tenRap.cumRapChieu.map((cumRap, index) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <div className='flex flex-wrap'>
+                                                                <img className='w-[60px]' src={cumRap.hinhAnh} alt="" />
+                                                                <div className='text-gray-400 ml-[14px]'>
+                                                                    <p className='text-3xl mb-1'>{cumRap.tenCumRap}</p>
+                                                                    <p>{cumRap.diaChi}</p>
+                                                                </div>
 
-                                        }
-                                    
-                                </Tabs.TabPane>
-                                )
-                            })}
-                                    </Tabs>
-                                </Tabs.TabPane>
-                                <Tabs.TabPane tab="Thông Tin" key="2">
-                                    Content of Tab Pane 2
-                                </Tabs.TabPane>
-                                <Tabs.TabPane tab="Đánh Giá" key="3">
-                                    Content of Tab Pane 3
-                                </Tabs.TabPane>
-                            </Tabs>
+                                                            </div >
+                                                            <div className='grid grid-cols-6'>
+                                                                {cumRap.lichChieuPhim.slice(0, 12).map((lichChieu, index) => {
+                                                                    return (
+                                                                        <div key={index}>
+                                                                            Suất chiếu:
+                                                                            <p className='ticketBooking' onClick={() => navigate(`/ticketRoom/${lichChieu.maLichChieu}`)}> {moment(lichChieu.ngayChieuGioChieu).format('DD-MM-YY: hh:mm:ss')}</p>
+                                                                        </div>
+                                                                    )
+
+                                                                })}
+                                                            </div>
+
+
+                                                        </div>
+                                                    )
+
+                                                })
+
+                                                }
+
+                                            </Tabs.TabPane>
+                                        )
+                                    })}
+                                </Tabs>
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Thông Tin" key="2">
+                                Content of Tab Pane 2
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Đánh Giá" key="3">
+                                Content of Tab Pane 3
+                            </Tabs.TabPane>
+                        </Tabs>
 
 
 
 
 
-                        </div>
-                   
+                    </div>
 
 
-                    {/* <div className='grid grid-cols-12'></div>
-                    <div className='scheduleDetail flex flex-wrap' >
-                        <div className='flex flex-wrap w-1/2'>
-                            <div className=' items-center flex w-full'>
-                                <div className='w-1/4'>
-                                    <img className='w-full' src="https://dummyimage.com/25x25/" alt="" />
-                                </div>
 
-                                <div className='  w-3/4 pl-[16px]'>
 
-                                    <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
-                                    <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
-                                    <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
-                                    <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
-
-                                </div>
-                            </div>
-                            <div className='w-full'>
-                                <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
-                                <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
-                                <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
-                                <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
-                            </div>
-
-                        </div>
-                        <div className='flex flex-wrap w-1/2'>
-                            <div className=' items-center flex w-full'>
-                                <div className='w-1/4'>
-                                    <img className='w-full' src="https://dummyimage.com/25x25/" alt="" />
-                                </div>
-
-                                <div className='  w-3/4 pl-[16px]'>
-
-                                    <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
-                                    <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
-                                    <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
-                                    <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
-
-                                </div>
-                            </div>
-                            <div className='w-full'>
-                                <p className='font-semibold'>Ngày giờ chiếu:  <span className='font-normal'>1/10/2022</span> </p>
-                                <p className='font-semibold'>Tên rạp: <span className='font-normal'>A</span></p>
-                                <p className='font-semibold'>Thời lượng:  <span className='font-normal'>90'</span> </p>
-                                <p className='font-semibold'>Giá vé: <span className='font-normal'>75,000VNĐ</span> </p>
-                            </div>
-
-                        </div>
-
-                    </div> */}
 
 
 
@@ -234,10 +186,16 @@ margin: auto
         color: #ffffff;
         margin-bottom: 24px
     }
-    .tabLichChieu {
-        background-color: #ffffff;
-        opacity: 0.2;
-        height: 300px
+
+    .ticketBooking {
+        cursor: pointer;
+        &:hover {
+            background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: 0.4s ease;
+        }
+
     }
    
     

@@ -1,8 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = () => {
+  const navigate = useNavigate()
   return (
     <Container className="Header">
       <header className="container body-font">
@@ -23,7 +24,7 @@ const Header = () => {
               Booking
             </NavLink>
           </nav>
-          <Button className="btn_login">LOGIN</Button>
+          <Button className="btn_login" onClick={() => navigate('/login')}>LOGIN</Button>
           <Button className="btn_signUp">SIGN UP</Button>
         </div>
       </header>
@@ -47,7 +48,13 @@ const Container = styled.div`
       }
       .title {
         font-weight: 700;
-        color: #fff !important;
+        background: -webkit-linear-gradient(
+              90deg,
+              #fad961 0%,
+              #f76b1c 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
       }
       .nav_header {
         a {

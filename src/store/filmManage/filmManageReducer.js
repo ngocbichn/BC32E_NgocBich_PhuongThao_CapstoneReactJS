@@ -7,8 +7,6 @@ const initialState = {
     error: undefined,
     isFetchingMD: false,
     movieDetail: undefined,
-    isFetchingSchedule: false,
-    movieSchedule: undefined
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
