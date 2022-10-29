@@ -4,6 +4,10 @@ import MainLayout from "../components/layouts/MainLayout";
 import HomeLayout from "../components/pages/userLayout/HomeLayout";
 import BookingTicket from "../components/pages/userLayout/BookingTicket";
 import DetailPage from "../components/pages/userLayout/DetailPage";
+import DashBoard from "../components/pages/adminLayout/DashBoard/DashBoard";
+import Films from "../components/pages/adminLayout/Films/Films";
+import Showtimes from "../components/pages/adminLayout/Showtimes/Showtimes";
+import AdminLayout from "../components/layouts/AdminLayout";
 
 const Routers = () => {
   const Routing = useRoutes([
@@ -17,7 +21,7 @@ const Routers = () => {
         },
         {
           path: "details/:movieId",
-          element: <DetailPage/>
+          element: <DetailPage />
         },
         {
           path: "bookingTicket",
@@ -25,6 +29,24 @@ const Routers = () => {
         },
       ],
     },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "/admin/dashboard",
+          element: <DashBoard />,
+        },
+        {
+          path: "/admin/films",
+          element: <Films />,
+        },
+        {
+          path: "/admin/showtimes",
+          element: <Showtimes />,
+        },
+      ]
+    }
   ]);
   return Routing;
 };
