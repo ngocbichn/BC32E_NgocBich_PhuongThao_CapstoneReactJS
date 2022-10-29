@@ -8,6 +8,8 @@ import DashBoard from "../components/pages/adminLayout/DashBoard/DashBoard";
 import Films from "../components/pages/adminLayout/Films/Films";
 import Showtimes from "../components/pages/adminLayout/Showtimes/Showtimes";
 import AdminLayout from "../components/layouts/AdminLayout";
+import { Navigate } from "react-router-dom";
+import LogInPage from "../components/pages/userLayout/LogInPage";
 
 const Routers = () => {
   const Routing = useRoutes([
@@ -15,6 +17,10 @@ const Routers = () => {
       path: "/",
       element: <MainLayout />,
       children: [
+        {
+          path: '/',
+          element: <Navigate to='/home' />,
+        },
         {
           path: "home",
           element: <HomeLayout />,
@@ -24,7 +30,7 @@ const Routers = () => {
           element: <DetailPage />
         },
         {
-          path: "bookingTicket",
+          path: "ticketRoom/:maLichChieu",
           element: <BookingTicket />,
         },
       ],
@@ -46,7 +52,12 @@ const Routers = () => {
           element: <Showtimes />,
         },
       ]
-    }
+    },
+    {
+      path: "login",
+      element: <LogInPage />,
+    },
+
   ]);
   return Routing;
 };
