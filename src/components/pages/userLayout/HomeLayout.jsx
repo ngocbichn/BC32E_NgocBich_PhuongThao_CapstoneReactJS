@@ -52,7 +52,7 @@ const HomeLayout = () => {
           tab={
             <img
               src={heThongRap.logo}
-              className="rounded-full ring-2 ring-offset-4"
+              className="rounded-full ring ring-white ring-offset-white ring-offset-2 hover:ring-yellow-500 hover:ring-offset-yellow-500 active:ring-yellow-400 active:ring-offset-yellow-400"
               width="50px"
               height="50px"
             />
@@ -64,16 +64,17 @@ const HomeLayout = () => {
               return (
                 <Tabs.TabPane
                   tab={
-                    <div className="text-left" style={{ width: "300px" }}>
+                    <div className="text-left" style={{ width: "350px" }}>
                       <img
-                        src={heThongRap.hinhAnh}
+                        src={cumRap.hinhAnh}
                         width="150px"
                         height="150px"
+                        onError={(e) => { e.target.onError = null; e.target.src = "https://picsum.photos/75/75" }}
                       />
-                      <p className="text-white font-semibold mt-20">
+                      <p className="font-semibold my-12 text-18 hover:text-yellow-200" style={{ color: "#fad961" }}>
                         {cumRap.tenCumRap}
                       </p>
-                      <p className="text-white">{cumRap.diaChi}</p>
+                      <p className="text-white mb-26">{cumRap.diaChi}</p>
                     </div>
                   }
                   key={index}
@@ -81,7 +82,8 @@ const HomeLayout = () => {
                   {cumRap.danhSachPhim.map((film, index) => {
                     return (
                       <div
-                        className="flex flex-row justify-start border-b-2 dark:border-gray-800 mb-30 pb-30"
+                        className="flex flex-row justify-start border-b-2 mb-30 pb-30"
+                        style={{ borderColor: "#5b5b5b" }}
                         key={index}
                       >
                         <div className="w-1/4">
@@ -90,11 +92,12 @@ const HomeLayout = () => {
                             width="150px"
                             height="250px"
                             alt={film.tenPhim}
+                            onError={(e) => { e.target.onError = null; e.target.src = "https://picsum.photos/150/200" }}
                           />
                         </div>
                         <div className="w-3/4">
                           <p
-                            className="font-semibold text-34"
+                            className="font-bold text-34 mb-16 leading-tight tracking-tight cursor-pointer"
                             style={{ color: "#fad961" }}
                           >
                             {film.tenPhim}
@@ -107,7 +110,7 @@ const HomeLayout = () => {
                                   <NavLink
                                     to="/"
                                     key={index}
-                                    className="text-white"
+                                    className="text-white text-18 hover:text-yellow-300"
                                   >
                                     {moment(lichChieu.ngayChieuGioChieu).format(
                                       "hh:mm A"
@@ -162,7 +165,7 @@ const HomeLayout = () => {
               Coming Soon
             </Button>
           </div>
-          <section className="movie_list_content mb-40">
+          <section className="movie_list_content mb-100">
             <div className="container mx-auto">
               <div className="flex flex-wrap -m-4">
                 {movieList
@@ -207,8 +210,12 @@ const HomeLayout = () => {
           </section>
         </div>
 
-        <div className="movie-schedule mb-80">
-          <Tabs tabPosition={tabPosition}>{renderHeThongRap()}</Tabs>
+        <div id="showtimes" className="movie-schedule mb-80">
+          <div className="container mx-auto">
+            <p className="title leading-none cursor-pointer sm:text-30">SHOWTIMES</p>
+            <Tabs tabPosition={tabPosition}>{renderHeThongRap()}</Tabs>
+          </div>
+
 
         </div>
       </div>
@@ -244,7 +251,7 @@ const Container = styled.div`
     }
     .container {
       max-width: 1280px;
-      padding: 0 25px;
+      padding: 0 15px;
       margin: auto;
       box-sizing: border-box;
       .rating_icon {
@@ -264,6 +271,13 @@ const Container = styled.div`
       }
       .movie-schedule {
         border-color: rgba(255, 255, 255, 0.75);
+        .title{
+          font-size: 45px;
+          font-weight: 700;
+          background: -webkit-linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        }
       }
     }
     
