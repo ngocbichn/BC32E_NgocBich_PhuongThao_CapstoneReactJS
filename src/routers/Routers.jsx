@@ -10,6 +10,7 @@ import Showtimes from "../components/pages/adminLayout/Showtimes/Showtimes";
 import AdminLayout from "../components/layouts/AdminLayout";
 import { Navigate } from "react-router-dom";
 import LogInPage from "../components/pages/userLayout/LogInPage";
+import SignUp from "../components/pages/userLayout/SignUp";
 
 const Routers = () => {
   const Routing = useRoutes([
@@ -56,6 +57,10 @@ const Routers = () => {
     {
       path: "login",
       element: <LogInPage />,
+    },
+    {
+      path: "signup",
+      element: <SignUp />,
     },
 
   ]);

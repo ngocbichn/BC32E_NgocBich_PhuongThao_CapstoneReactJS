@@ -1,9 +1,29 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useUserManage } from "../../store/filmManage";
 
 const Header = () => {
   const navigate = useNavigate()
+  const {userLogin, isLoggin } = useUserManage()
+
+  const renderLogin = () => {
+    if (isLoggin) {
+      return (
+        <>
+       <span className="text-white mr-5"> Xin chào {userLogin.taiKhoan}</span>
+       <Button className="btn_signOut">Đăng xuất</Button>
+       </>
+      )
+
+    }
+    return (
+      <>
+        <Button className="btn_login" onClick={() => navigate('/login')}>LOGIN</Button>
+        <Button className="btn_signUp" onClick={() => navigate('/signup')}>SIGN UP</Button>
+      </>
+    )
+  }
   return (
     <Container className="Header">
       <header className="container body-font">
@@ -24,8 +44,9 @@ const Header = () => {
               Booking
             </NavLink>
           </nav>
-          <Button className="btn_login" onClick={() => navigate('/login')}>LOGIN</Button>
-          <Button className="btn_signUp">SIGN UP</Button>
+          {renderLogin()}
+          {/* <Button className="btn_login" onClick={() => navigate('/login')}>LOGIN</Button>
+          <Button className="btn_signUp">SIGN UP</Button> */}
         </div>
       </header>
 

@@ -4,8 +4,11 @@ import Header from '../../molecules/Header'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { userLoginAction, useUserManage } from '../../../store/filmManage'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const LogInPage = () => {
+
+  const navigate = useNavigate()
 
     const dispatch = useDispatch() 
     const formik = useFormik({
@@ -16,11 +19,16 @@ const LogInPage = () => {
         onSubmit: values => {
           console.log('values',values)
           dispatch(userLoginAction(values))
+          .then(() => {
+            navigate(-1)
+          })
+
         },
       });
 
-    // const state = useUserManage()
-    // console.log(state)
+    const {userLogin,isLoggin} = useUserManage()
+    console.log(userLogin)
+    console.log(isLoggin)
 
     
 
@@ -28,12 +36,12 @@ const LogInPage = () => {
     <Container className='LoginPage'>
     <div>
     <div className="main-content py-20 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-          <div
+          <NavLink
             className="flex title-font font-medium items-center mb-4 md:mb-0"
             to="/home"
           >
             <span className="title ml-3 text-5xl text-orange-500" >MOVIE</span>
-          </div>
+          </NavLink>
          
         </div>
     </div>
@@ -72,9 +80,7 @@ const LogInPage = () => {
         <div className="">
           <div className="text-center sm:text-left whitespace-nowrap">
             <button type='button' className="transition duration-200 mx-5 px-5 py-3 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
-              {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block align-text-top">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-              </svg> */}
+             
               <span className="inline-block ml-1">Quên mật khẩu </span>
             </button>
           </div>
