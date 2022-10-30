@@ -37,7 +37,7 @@ const Container = styled.div`
             width: 85%;
         }
     }
-`
+`;
 const Button = styled.button`
   background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
   color: #fff;
