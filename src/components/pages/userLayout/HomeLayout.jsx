@@ -33,9 +33,10 @@ const HomeLayout = () => {
     dispatch(getMovieList());
   }, []);
 
+  //getCinemaInfo
   const { cinemaInfo, isFetchingCinema } = useCinemaManage();
-  console.log("cinemaInfo", cinemaInfo);
-  console.log("isFetchingCinema", isFetchingCinema);
+  // console.log("cinemaInfo", cinemaInfo);
+  // console.log("isFetchingCinema", isFetchingCinema);
   useEffect(() => {
     dispatch(getCinemaInfo());
   }, []);
@@ -281,7 +282,7 @@ const Container = styled.div`
       }
     }
     
-`;
+  }`;
 
 const Button = styled.button`
   background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
