@@ -4,13 +4,23 @@ import { ticketBookingService } from "../../services/ticketBookingService"
 
 const initialState = {
     ticketInfo: [],
-    isFetching: false
+    isFetching: false,
+    danhSachGheDangDat: []
 }
 
 export const {reducer: movieBookingReducer, actions: movieBookingAction} = createSlice({
     name: 'movieBooking',
     initialState,
     reducers: {
+        //ĐẶT VÉ
+        selectingTicket: (state,action) => {
+            let index = state.danhSachGheDangDat.findIndex((item) => item.maGhe === action.payload.maGhe)
+            if (index !== -1) {
+                state.danhSachGheDangDat.splice(index,1)
+            }
+            else 
+            state.danhSachGheDangDat.push(action.payload)
+        }
 
     },
     extraReducers: (builder) => {
@@ -45,3 +55,17 @@ try {
 }
 
 })
+
+export const bookingTicket = createAsyncThunk('movieBooking/bookingTicket', async(bookedTikcetInfo, {dispatch,getState,rejectWithValue}) => {
+
+    try {
+        const result = await ticketBookingService.bookingTicket(bookedTikcetInfo)
+        return result.data.content
+        
+    } catch (error) {
+        return rejectWithValue(error.data.response)
+        
+    }
+
+})
+

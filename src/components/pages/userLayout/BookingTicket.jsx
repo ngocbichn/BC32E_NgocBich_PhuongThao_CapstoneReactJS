@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
+import { Navigate, redirect, useActionData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getTicketRoomDetail, useUserManage } from "../../../store/filmManage";
+import { bookingTicket, getTicketRoomDetail, movieBookingAction, useUserManage } from "../../../store/filmManage";
 import { useMovieBooking } from "../../../store/filmManage/movieBookingSelector";
+import { CloseCircleOutlined, CloseSquareOutlined} from '@ant-design/icons';
+import { sortBy } from "lodash";
 
 const BookingTicket = () => {
-
-
 
   console.log(localStorage.getItem('User_Login'))
 const dispatch = useDispatch()
@@ -15,9 +15,10 @@ const dispatch = useDispatch()
 
   const paramLichChieu = useParams()
   console.log(paramLichChieu.maLichChieu)
-  const {ticketInfo} = useMovieBooking()
+  const {ticketInfo,danhSachGheDangDat} = useMovieBooking()
   const { userLogin } = useUserManage()
   console.log('ticketInfo', ticketInfo)
+  console.log('danhSachGheDangDat', danhSachGheDangDat)
 
 
   useEffect(() => {
@@ -37,10 +38,22 @@ const dispatch = useDispatch()
   const renderGhe = () => {
     return danhSachGhe?.map((item, index) => {
       let classGheDaDat = item.daDat ? 'gheDaDat' : ''
+      let classGheDangDat = ''
+      let indexGheDangDat = danhSachGheDangDat.findIndex(gheDangDat => gheDangDat.maGhe === item.maGhe)
+
+      if (indexGheDangDat !== -1 ) {
+        classGheDangDat = 'gheDangDat'
+      } 
+      else {
+        classGheDangDat =''
+      }
+
+    
       return (
-        <> {item.loaiGhe === 'Vip'? <button disabled={item.daDat} className={`ghe gheVip m-2 ${classGheDaDat}`}  key={index}
-        >{item.stt}</button>   :  <button  disabled={item.daDat} className={`ghe m-2 ${classGheDaDat}`} key={index}
-        >{item.stt}</button>}
+        <> {item.loaiGhe === 'Vip'? <button onClick={() => {dispatch(movieBookingAction.selectingTicket(item))}} disabled={item.daDat} className={`ghe m-1 gheVip ${classGheDaDat} ${classGheDangDat}`}  key={index}
+        > {item.daDat? <CloseSquareOutlined /> :  item.stt} </button>   :  <button onClick={() => {dispatch(movieBookingAction.selectingTicket(item))}} disabled={item.daDat} className={`ghe m-1 ${classGheDaDat} ${classGheDangDat}`} key={index}
+        >{item.daDat? <CloseSquareOutlined /> :  item.stt}</button>}
+        {(index + 1) %16 === 0 ? <br /> : '' }
         </>
        
       )
@@ -60,23 +73,33 @@ const dispatch = useDispatch()
             <div className="screen "> 
             <h3 className="text-black my-auto text-center items-center mt-3 ">MÀN HÌNH</h3>  </div>
             </div>
-            <div>
+            <div className="ml-[35px] mt-[25px]">
               {renderGhe()}
             </div>
           </div>
 
           <div className=" pl-[40px] col-span-4">
             
-            <h3 className="text-center text-green-500 text-3xl">0đ</h3>
+            <h3 className="text-center text-green-500 text-3xl"> <span className="text-orange-500">Tổng tiền: </span> 
+            {danhSachGheDangDat.reduce((tongTien,item,index) => {
+                  return tongTien + item.giaVe
+                }, 0).toLocaleString()}
+            </h3>
             <hr />
             <h3 className="text-xl text-orange-400">{thongTinPhim?.tenPhim}</h3>
             <p>Địa điểm: {thongTinPhim?.diaChi}</p>
             <p>Ngày: {thongTinPhim?.ngayChieu}. Suất chiếu: {thongTinPhim?.gioChieu}</p>
             <hr />
             <div className="flex flex-row ">
-              <div className="w-4/5"> <span className="text-orange-400 text-lg text-left">Ghế</span></div>
+              <div className="w-4/5"> <span className="text-orange-400 text-lg text-left">Ghế đã chọn: {sortBy(danhSachGheDangDat.map(item => ({...item, stt: Number(item.stt)})),['stt']).map((gheDD,index) => {
+                return (
+                  <span className="text-xl text-green-500" key={index}> <span> </span>{gheDD.stt}</span>  
+                )
+              })} <span> </span> </span></div>
               <div className="text-right text-red-500">
-                0đ
+                {danhSachGheDangDat.reduce((tongTien,item,index) => {
+                  return tongTien + item.giaVe
+                }, 0).toLocaleString()}
               </div>
 
             </div>
@@ -86,13 +109,32 @@ const dispatch = useDispatch()
             <div>
               <i>Số điện thoại: </i> {userLogin.soDT}
             </div>
-            <div className="row mt-3">
-              <Button>Đặt vé</Button>
+            <div className="row mt-3 cursor-pointer">
+              <Button onClick={() => {
+                let bookedTikcetInfo = {
+                        "maLichChieu": 0,
+                        "danhSachVe": [
+                          {
+                            "maGhe": 0,
+                            "giaVe": 0
+                          }
+                        ]      
+                }
+                bookedTikcetInfo.maLichChieu = paramLichChieu.maLichChieu;
+                bookedTikcetInfo.danhSachVe = danhSachGheDangDat
+                console.log(bookedTikcetInfo)
+                dispatch(bookingTicket(bookedTikcetInfo))
+
+              }}>Đặt vé</Button>
             </div>
             
           
 
           </div>
+        </div>
+
+        <div>
+          fdskjfh
         </div>
 
       </div>
