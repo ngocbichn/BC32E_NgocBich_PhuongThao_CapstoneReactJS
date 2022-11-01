@@ -1,13 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "../loading/Loading";
 import Footer from "../molecules/Footer";
 import Header from "../molecules/Header";
 import HomeLayout from "../pages/userLayout/HomeLayout";
 
 const MainLayout = () => {
   return (
+    
     <Container className="MainLayout">
+      <Loading/>
       <Header />
       <main className="main-content">
         <Outlet />

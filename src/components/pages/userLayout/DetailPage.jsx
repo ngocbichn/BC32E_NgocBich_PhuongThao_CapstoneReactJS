@@ -9,10 +9,10 @@ import moment from 'moment'
 
 
 const DetailPage = () => {
-    const [tabPosition, setTabPosition] = useState('left');
-    const changeTabPosition = (e) => {
-        setTabPosition(e.target.value);
-    };
+    // const [tabPosition, setTabPosition] = useState('left');
+    // const changeTabPosition = (e) => {
+    //     setTabPosition(e.target.value);
+    // };
 
     const param = useParams()
     console.log(param.movieId)
@@ -102,7 +102,7 @@ const DetailPage = () => {
 
                                                             </div >
                                                             <div className='grid grid-cols-6'>
-                                                                {cumRap.lichChieuPhim.slice(0, 12).map((lichChieu, index) => {
+                                                                {cumRap.lichChieuPhim?.slice(0, 12).map((lichChieu, index) => {
                                                                     return (
                                                                         <div key={index}>
                                                                             Suất chiếu:

@@ -3,13 +3,17 @@ import './App.css';
 import { BrowserRouter, Navigate, Route } from 'react-router-dom';
 import Routers from './routers/Routers';
 import { createBrowserHistory } from '@remix-run/router';
+import Loading from './components/loading/Loading';
 
 
 function App() {
   return (
     <div>
+  
       <BrowserRouter>
-        <Routers>
+
+        <Routers>  
+        
           <Route />
         </Routers>
       </BrowserRouter>

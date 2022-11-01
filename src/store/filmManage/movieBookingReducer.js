@@ -5,14 +5,15 @@ import { ticketBookingService } from "../../services/ticketBookingService"
 const initialState = {
     ticketInfo: [],
     isFetching: false,
-    danhSachGheDangDat: []
+    danhSachGheDangDat: [],
+    isBooking: false
 }
 
 export const {reducer: movieBookingReducer, actions: movieBookingAction} = createSlice({
     name: 'movieBooking',
     initialState,
     reducers: {
-        //ĐẶT VÉ
+        //CHỌN VÉ
         selectingTicket: (state,action) => {
             let index = state.danhSachGheDangDat.findIndex((item) => item.maGhe === action.payload.maGhe)
             if (index !== -1) {
@@ -37,6 +38,18 @@ export const {reducer: movieBookingReducer, actions: movieBookingAction} = creat
             state.isFetching = false
             state.ticketInfo = action.payload
         })
+
+        .addCase(bookingTicket.pending, (state,action) => {
+            state.isBooking = true
+        })
+        .addCase(bookingTicket.fulfilled, (state,action) => {
+            state.isBooking = false
+        })
+    
+        .addCase(bookingTicket.rejected, (state,action) => {
+            state.isBooking = false
+        })
+    
     
 
     }

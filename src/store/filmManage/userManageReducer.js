@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { isUndefined } from "lodash"
 import { Navigate, useNavigate } from "react-router-dom"
 import { userManageService } from "../../services/userManageService"
 
@@ -16,6 +17,8 @@ const initialState = {
     userLogin: user,
     isProcessingLoggin: false,
     isLoggin: false,
+    userHistory: undefined,
+    isgettingHistory: false
    
 }
 
@@ -42,7 +45,20 @@ export const {reducer: userManageReducer, actions: userManageAction} =createSlic
             state.userLogin = action.payload
             state.isLoggin = false
         })
-       
+
+        //lấy lịch sử người dùng 
+
+        .addCase(getBookingHistory.pending, (state,action) => {
+            state.isgettingHistory=true
+        })
+        .addCase(getBookingHistory.fulfilled, (state,action) => {
+            state.isgettingHistory=false
+            state.userHistory = action.payload
+        })
+        .addCase(getBookingHistory.rejected, (state,action) => {
+            state.isgettingHistory=false
+            state.userHistory = action.payload
+        })
 
     }
 })
@@ -54,15 +70,25 @@ export const userLoginAction = createAsyncThunk('/userManage/userLogin', async(u
         if (result.data.statusCode === 200) {
             return result.data.content         
         }
-       
-        
-        
-        
+              
     } catch (error) {
         return rejectWithValue(error)
         
     }
 
+})
+
+export const getBookingHistory = createAsyncThunk('userMange/bookingHistory', async (_,{dispatch, getState,rejectWithValue}) => {
+    try {
+        const result = await userManageService.getBookingHistory()
+        console.log('A',result.data.content)
+
+        return result.data.content
+        
+    } catch (error) {
+        return rejectWithValue(error)
+        
+    }
 })
 
 
