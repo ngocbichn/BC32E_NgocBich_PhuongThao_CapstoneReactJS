@@ -7,10 +7,13 @@ isLoading: false
 export const {reducer: loadingReducer, actions: loadingAction} = createSlice({
     name: 'loading',
     initialState,
-    reducer: {
+    reducers: {
         displayLoading: (state,action) => { 
             state.isLoading = true
-        }
+        },
+        hideLoading:  (state,action) => { 
+            state.isLoading = false
+        },
 
     },
     extraReducers: (builder) => {

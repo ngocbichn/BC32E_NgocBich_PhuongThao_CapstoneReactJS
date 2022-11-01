@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { ticketBookingService } from "../../services/ticketBookingService"
+import { loadingAction } from "./loadingReducer"
+
 
 
 const initialState = {
@@ -72,10 +74,17 @@ try {
 export const bookingTicket = createAsyncThunk('movieBooking/bookingTicket', async(bookedTikcetInfo, {dispatch,getState,rejectWithValue}) => {
 
     try {
+        //gọi loading để hiện lên 
+        dispatch(loadingAction.displayLoading())
+        
         const result = await ticketBookingService.bookingTicket(bookedTikcetInfo)
+        dispatch(loadingAction.hideLoading())
+
         return result.data.content
         
+        
     } catch (error) {
+        dispatch(loadingAction.hideLoading())
         return rejectWithValue(error.data.response)
         
     }
