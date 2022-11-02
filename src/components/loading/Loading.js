@@ -7,9 +7,11 @@ const Loading = () => {
     console.log(loadingAction)
   return (
       <> {isLoading? 
-         <div style={{position: 'absolute', top: '0', bottom: '0', width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5', display: 'flex', justifyContent: 'center', alignItems: 'center',zIndex: '1000'}}>
+         <div style={{position: 'absolute', top: '0', bottom: '0', width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center',zIndex: '1000'}}>
     <div className='text-4xl text-white'>Loading</div> </div> : ''}
     </>
+    // <div style={{position: 'absolute', top: '0', bottom: '0', width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)',  justifyContent: 'center', alignItems: 'center',zIndex: '1000'}}>
+    //  <div className='text-4xl text-white'>Loading</div> </div>
  
   )
 }

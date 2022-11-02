@@ -178,9 +178,13 @@ const BookingTicket = () => {
 
 
 const App = () => {
+  const {tabActive} = useMovieBooking()
+  console.log('tabActive',tabActive)
+  const dispatch = useDispatch()
+  
   return (
     <div className=" tab p-5 ">
-      <Tabs defaultActiveKey="1" className="text-white">
+      <Tabs defaultActiveKey={tabActive} activeKey={tabActive} className="text-white"  onTabClick={(key,event) =>  dispatch(movieBookingAction.tabSwitching(key))} >
         <Tabs.TabPane tab="01. CHỌN GHẾ & THANH TOÁN" key="1">
           
           <BookingTicket />
@@ -287,7 +291,7 @@ margin: auto;
   background-color: #f76b1c;
 }
 .gheUserDat {
-  background-color: yellow;
+  background-color: yellow!important;;
   color: #000000;
 
 

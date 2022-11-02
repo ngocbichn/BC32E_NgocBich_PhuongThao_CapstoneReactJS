@@ -8,7 +8,8 @@ const initialState = {
     ticketInfo: [],
     isFetching: false,
     danhSachGheDangDat: [],
-    isBooking: false
+    isBooking: false,
+    tabActive: '1', 
 }
 
 export const {reducer: movieBookingReducer, actions: movieBookingAction} = createSlice({
@@ -23,7 +24,17 @@ export const {reducer: movieBookingReducer, actions: movieBookingAction} = creat
             }
             else 
             state.danhSachGheDangDat.push(action.payload)
+        },
+        completeBooking: (state,action) => {
+            state.danhSachGheDangDat = []
+        },
+        tab2Switching: (state,action) => {
+            state.tabActive = '2'
+        },
+        tabSwitching: (state,action) => {
+            state.tabActive = action.payload
         }
+
 
     },
     extraReducers: (builder) => {
@@ -46,6 +57,8 @@ export const {reducer: movieBookingReducer, actions: movieBookingAction} = creat
         })
         .addCase(bookingTicket.fulfilled, (state,action) => {
             state.isBooking = false
+            // state.danhSachGheDangDat = []
+            // state.tabActive = '2'
         })
     
         .addCase(bookingTicket.rejected, (state,action) => {
@@ -78,8 +91,12 @@ export const bookingTicket = createAsyncThunk('movieBooking/bookingTicket', asyn
         dispatch(loadingAction.displayLoading())
         
         const result = await ticketBookingService.bookingTicket(bookedTikcetInfo)
+        //bất đôngf bộ nên await thêm cái nữa
+       await dispatch(getTicketRoomDetail(bookedTikcetInfo.maLichChieu))
+     dispatch(movieBookingAction.completeBooking())
         dispatch(loadingAction.hideLoading())
-
+        dispatch(movieBookingAction.tab2Switching())
+       
         return result.data.content
         
         
@@ -90,4 +107,5 @@ export const bookingTicket = createAsyncThunk('movieBooking/bookingTicket', asyn
     }
 
 })
+
 
