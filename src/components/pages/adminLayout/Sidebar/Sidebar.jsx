@@ -5,8 +5,8 @@ import styled from "styled-components";
 const Sidebar = () => {
     return (
         <Container className="Sidebar">
-            <div className="h-full p-3 w-100 dark:bg-gray-900 text-white">
-                <div className="flex items-center p-2 space-x-4">
+            <div className="h-full p-3 w-200 dark:bg-gray-900 text-white">
+                <div className="flex items-center p-12">
                     <div>
                         <Link
                             className="admin_title text-40 text-white font-semibold mb-20"
@@ -17,7 +17,7 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className="divide-y divide-gray-300 sidebar_content">
-                    <ul className="pt-2 pb-4 ">
+                    <ul className="pt-2 pb-4 pl-14">
                         <li className="mb-26">
                             <a
                                 rel="noopener noreferrer"

@@ -20,3 +20,5 @@ api.interceptors.request.use((config) => {
 
     return config
 })
+
+export const GROUPID = 'GP06'

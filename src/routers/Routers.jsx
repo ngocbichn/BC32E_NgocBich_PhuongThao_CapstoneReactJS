@@ -11,7 +11,8 @@ import AdminLayout from "../components/layouts/AdminLayout";
 import { Navigate } from "react-router-dom";
 import LogInPage from "../components/pages/userLayout/LogInPage";
 import SignUp from "../components/pages/userLayout/SignUp";
-import AddNew from "../components/layouts/AdminLayout"
+import AddNew from "../components/pages/adminLayout/Films/AddNew"
+import EditFilm from "../components/pages/adminLayout/Films/EditFilm";
 
 
 const Routers = () => {
@@ -53,6 +54,10 @@ const Routers = () => {
         {
           path: "/admin/films/addnew",
           element: <AddNew />
+        },
+        {
+          path: "/admin/films/edit/:movieId",
+          element: <EditFilm />
         },
         {
           path: "/admin/showtimes",

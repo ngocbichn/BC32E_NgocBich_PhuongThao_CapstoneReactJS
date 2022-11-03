@@ -16,32 +16,37 @@ import { useFormik } from 'formik';
 import moment from "moment";
 import FormList from 'antd/lib/form/FormList';
 import { useDispatch } from 'react-redux';
-import { postMovie } from '../../../../store/filmManage/filmManageReducer';
+import { getFilmInfo, postMovie } from '../../../../store/filmManage/filmManageReducer';
 import { useEffect } from 'react';
 import { useFilmManage } from '../../../../store/filmManage/filmManageSelector';
 import { GROUPID } from '../../../../constants/api';
+import { useParams } from 'react-router-dom';
 
-const AddNew = () => {
+const EditFilm = () => {
     const [componentSize, setComponentSize] = useState('default');
     const [imgSrc, setImgSrc] = useState('')
     const dispatch = useDispatch()
-    const { movieList, isFetching, error } = useFilmManage();
+    const param = useParams()
+    console.log(param.movieId)
+    const { filmInfo } = useFilmManage();
+    console.log('filmInfo', filmInfo)
 
-    // useEffect(() => {
-    //     dispatch(postMovie())
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(getFilmInfo(param.movieId))
+    }, [])
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            tenPhim: '',
-            trailer: '',
-            moTa: '',
-            ngayKhoiChieu: '',
-            dangChieu: false,
-            sapChieu: false,
-            hot: false,
-            danhGia: 0,
-            hinhAnh: {},
+            tenPhim: filmInfo?.tenPhim,
+            trailer: filmInfo?.trailer,
+            moTa: filmInfo?.moTa,
+            ngayKhoiChieu: filmInfo?.ngayKhoiChieu,
+            dangChieu: filmInfo.dangChieu,
+            sapChieu: filmInfo.sapChieu,
+            hot: filmInfo.hot,
+            danhGia: filmInfo.danhGia,
+            hinhAnh: null,
 
         },
         onSubmit: (values) => {
@@ -52,19 +57,19 @@ const AddNew = () => {
                 if (key !== 'hinhAnh') {
                     formData.append(key, values[key])
                 } else {
-                    formData.append('File', values.hinhAnh, values.hinhAnh.name)
+                    if (values.dangChieu.hinhAnh !== null) {
+                        formData.append('File', values.hinhAnh, values.hinhAnh.name)
+                    }
                 }
             }
             console.log('formik', formData.get('moTa'))
 
-            //POST formData
-            dispatch(postMovie(formData))
         }
     })
 
     const handleChangeDatePicker = (value) => {
-        console.log('datePickerChange', moment(value).format('DD/MM/YYYY'))
-        let ngayKhoiChieu = moment(value).format('DD/MM/YYYY')
+        // console.log('datePickerChange', moment(value))
+        let ngayKhoiChieu = moment(value)
         formik.setFieldValue('ngayKhoiChieu', ngayKhoiChieu)
     }
 
@@ -99,7 +104,7 @@ const AddNew = () => {
 
 
     return (
-        <Container className='AddNew'>
+        <Container className='EditFilm'>
             <Form
                 onSubmitCapture={formik.handleSubmit}
                 labelCol={{
@@ -114,48 +119,54 @@ const AddNew = () => {
                 }}
                 size="large"
             >
-                <h2 className="title leading-none cursor-pointer font-semibold text-white sm:text-30 mt-20 mb-30">Add New Film</h2>
+                <h2 className="title leading-none cursor-pointer font-semibold text-white sm:text-30 mt-20 mb-30">Edit Film</h2>
                 <Form.Item label="Movie Name">
-                    <Input name="tenPhim" placeholder='Movie name' onChange={formik.handleChange} />
+                    <Input name="tenPhim" placeholder='Movie name' onChange={formik.handleChange}
+                        value={formik.values.tenPhim} />
                 </Form.Item>
                 <Form.Item label="Trailer">
-                    <Input name="trailer" placeholder='Trailer' onChange={formik.handleChange} />
+                    <Input name="trailer" placeholder='Trailer' onChange={formik.handleChange}
+                        value={formik.values.trailer} />
                 </Form.Item>
                 <Form.Item label="Description">
-                    <Input name="moTa" placeholder='Description' onChange={formik.handleChange} />
+                    <Input name="moTa" placeholder='Description' onChange={formik.handleChange}
+                        value={formik.values.moTa} />
                 </Form.Item>
                 <Form.Item label="Show time">
                     <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
+                    {/* value={moment(formik.values.ngayKhoiChieu, "DD/MM/YYYY")} */}
                 </Form.Item>
                 <Form.Item label="Now Showing" valuePropName="checked">
-                    <Switch name="dangChieu" onChange={handleChangeSwitch('dangChieu')} />
+                    <Switch name="dangChieu" onChange={handleChangeSwitch('dangChieu')}
+                        checked={formik.values.dangChieu} />
                 </Form.Item>
                 <Form.Item label="Coming Soon" valuePropName="checked">
-                    <Switch name="sapChieu" onChange={handleChangeSwitch('sapChieu')} />
+                    <Switch name="sapChieu" onChange={handleChangeSwitch('sapChieu')} checked={formik.values.sapChieu} />
                 </Form.Item>
                 <Form.Item label="Hot" valuePropName="checked">
-                    <Switch name="hot" onChange={handleChangeSwitch('hot')} />
+                    <Switch name="hot" onChange={handleChangeSwitch('hot')} checked={formik.values.hot} />
                 </Form.Item>
                 <Form.Item label="Rating">
-                    <InputNumber placeholder='10' onChange={handleChangeInputNumber('danhGia')} min={1} max={10} />
+                    <InputNumber placeholder='10' onChange={handleChangeInputNumber('danhGia')} min={1} max={10}
+                        value={formik.values.danhGia} />
                 </Form.Item>
                 <Form.Item label="Image">
                     <input type="file" onChange={handleChangeFile} accept="image/png,image/jpeg,image/jpg,image/gif" />
                     <br />
-                    <img style={{ width: 150, height: 150 }} src={imgSrc} alt='...' />
+                    <img style={{ width: 150, height: 150 }} src={imgSrc === '' ? filmInfo.hinhAnh : imgSrc} alt='...' />
                 </Form.Item>
                 <Form.Item label="Submit">
-                    <button type="submit" className='bg-blue-500 text-white p-2 btn_submit'>Add film</button>
+                    <button type="submit" className='bg-blue-500 text-white p-2 btn_submit'>Edit film</button>
                 </Form.Item>
             </Form>
         </Container>
     )
 }
 
-export default AddNew
+export default EditFilm
 
 const Container = styled.div`
-    &.AddNew{
+    &.EditFilm{
         .ant-form-item{
             .ant-form-item-label{
                 label{

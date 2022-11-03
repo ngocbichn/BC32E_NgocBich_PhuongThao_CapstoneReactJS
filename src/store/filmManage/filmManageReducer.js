@@ -7,6 +7,9 @@ const initialState = {
     error: undefined,
     isFetchingMD: false,
     movieDetail: undefined,
+    isLoading: false,
+    filmInfo: {},
+    isFetchingFilmInfo: false,
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
@@ -16,7 +19,7 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
     },
     extraReducers: (builder) => {
         builder
-        //getmovielist
+            //getmovielist
             .addCase(getMovieList.pending, (state, action) => {
                 state.isFetching = true
             })
@@ -28,35 +31,45 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
                 state.error = action.payload
                 state.isFetching = false
             })
-        //getmoviedetail
-        .addCase(getMovieDetail.pending,(state,action) => {
-            state.isFetchingMD = true
-        })
-        .addCase(getMovieDetail.fulfilled, (state,action) => {
-            state.isFetchingMD = false
-           state.movieDetail= action.payload
-            
-        })
-        .addCase(getMovieDetail.rejected, (state,action) => {
-            state.isFetchingMD = false
-            state.error = action.payload
-          
-        })
+            //getmoviedetail
+            .addCase(getMovieDetail.pending, (state, action) => {
+                state.isFetchingMD = true
+            })
+            .addCase(getMovieDetail.fulfilled, (state, action) => {
+                state.isFetchingMD = false
+                state.movieDetail = action.payload
 
-        // getMovieSchedulebyId
-        // .addCase(getMovieSchedulebyId.pending,(state,action) => {
-        //     state.isFetchingSchedule = true
-        // })
-        // .addCase(getMovieSchedulebyId.fulfilled,(state,action) => {
-        //     state.isFetchingSchedule = false
-        //     state.movieSchedule = action.payload
+            })
+            .addCase(getMovieDetail.rejected, (state, action) => {
+                state.isFetchingMD = false
+                state.error = action.payload
 
-        // })
-        // .addCase(getMovieSchedulebyId.rejected,(state,action) => {
-        //     state.isFetchingSchedule = false
-        //     state.movieSchedule = action.payload
-
-        // })
+            })
+            //POST movie
+            .addCase(postMovie.pending, (state, action) => {
+                state.isLoading = true
+                state.errorMessage = null
+            })
+            .addCase(postMovie.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.errorMessage = action.payload
+            })
+            .addCase(postMovie.rejected, (state, action) => {
+                state.isLoading = false
+                state.errorMessage = action.payload.message
+            })
+            //Get filmInfo
+            .addCase(getFilmInfo.pending, (state, action) => {
+                state.isFetchingFilmInfo = true
+            })
+            .addCase(getFilmInfo.fulfilled, (state, action) => {
+                state.isFetchingFilmInfo = false
+                state.filmInfo = action.payload
+            })
+            .addCase(getFilmInfo.rejected, (state, action) => {
+                state.isFetchingFilmInfo = false
+                state.error = action.payload
+            })
     }
 })
 
@@ -73,25 +86,42 @@ export const getMovieList = createAsyncThunk(
     }
 )
 
-export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async(movieId, {dispatch,getState,rejectWithValue})=> {
+export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async (movieId, { dispatch, getState, rejectWithValue }) => {
     try {
         const result = await filmManageServices.getMovieDetail(movieId)
         return result.data.content
-        
+
     } catch (error) {
         return rejectWithValue(error.response.data)
-        
+
     }
 
 })
 
-// export const createMovieSchedule = createAsyncThunk('filmMange/getMovieSchedulebyId', async(movieId,{dispatch,getState,rejectWithValue}) => {
-//     try {
-//         const result = await filmManageServices.getMovieSchedulebyId(movieId)
-//         return result.data.content
-        
-//     } catch (error) {
-//         return rejectWithValue(error.response.data)
-        
-//     }
-// })
+export const postMovie = createAsyncThunk(
+    'filmManage/postMovie',
+
+    async (formData, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await filmManageServices.postMovie(formData)
+            // console.log('result', result.data.content)
+            if (result.data.statusCode === 200) {
+                return result.data.content
+            }
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const getFilmInfo = createAsyncThunk(
+    'filmManage/getFilmInfo',
+    async (movieId, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await filmManageServices.getFilmInfo(movieId)
+            return result.data.content
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)

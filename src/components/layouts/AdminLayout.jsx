@@ -7,7 +7,7 @@ const AdminLayout = () => {
     return (
         <Container className='AdminLayout'>
             <Sidebar />
-            <div className='main-content h-full p-3 space-y-2 text-white'>
+            <div className='main-content h-full p-16 space-y-2 text-white'>
                 <div className='navigation flex justify-end align-items-center gap-16 border-b-orange-300 border-b-2 pb-20'>
                     <img src="https://source.unsplash.com/100x100/?portrait" alt="" className="w-40 h-40 rounded-full dark:bg-gray-500" />
                     <Button>Log Out</Button>

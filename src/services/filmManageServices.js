@@ -1,4 +1,4 @@
-import { api } from "../constants/api"
+import { api, GROUPID } from "../constants/api"
 
 
 
@@ -10,16 +10,12 @@ export const filmManageServices = {
     getMovieDetail: (movieId) => {
         return api.get(`QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${movieId}`)
     },
-    // createMovieSchedule: (data= { 
-
-    //         "maPhim": 0,
-    //         "ngayChieuGioChieu": "string",
-    //         "maRap": "string",
-    //         "giaVe": 0
-
-    // })=> {
-    //     return api.post('QuanLyDatVe/TaoLichChieu',data)
-    // }
+    postMovie: (formData) => {
+        return api.post(`QuanLyPhim/ThemPhimUploadHinh?maNhom=${GROUPID}`, formData)
+    },
+    getFilmInfo: (movieId) => {
+        return api.get(`QuanLyPhim/LayThongTinPhim?MaPhim=${movieId}`)
+    }
 
 }
 

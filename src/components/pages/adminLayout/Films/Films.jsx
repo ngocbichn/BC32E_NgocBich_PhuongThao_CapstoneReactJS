@@ -19,7 +19,7 @@ const Films = () => {
     useEffect(() => {
         dispatch(getMovieList());
     }, []);
-    console.log("movieList", movieList);
+    // console.log("movieList", movieList);
 
     const columns = [
         {
@@ -96,14 +96,16 @@ const Films = () => {
                     <div className="flex justify-start align-items-center">
                         <div className="mr-10">
                             <NavLink
+                                key={1}
                                 className=" text-orange-300 text-30 p-2 hover:text-orange-600"
-                                to="/"
+                                to={`/admin/films/edit/${film.maPhim}`}
                             >
                                 <EditFilled />
                             </NavLink>
                         </div>
                         <div className="mr-10">
                             <NavLink
+                                key={2}
                                 className=" text-orange-700 text-30 p-2 hover:text-orange-200"
                                 to="/"
                             >
