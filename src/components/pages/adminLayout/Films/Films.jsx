@@ -29,7 +29,7 @@ const Films = () => {
                 return <span>{text}</span>;
             },
             sorter: (a, b) => a.maPhim - b.maPhim,
-            sortDirections: ["descend", "ascend"],
+            sortDirections: ["ascend", "descend"],
             width: "10%",
         },
         {

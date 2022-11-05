@@ -16,53 +16,66 @@ import { useFormik } from 'formik';
 import moment from "moment";
 import FormList from 'antd/lib/form/FormList';
 import { useDispatch } from 'react-redux';
-import { getFilmInfo, postMovie } from '../../../../store/filmManage/filmManageReducer';
+import { getFilmInfo, postFilmInfoChanged, postMovie } from '../../../../store/filmManage/filmManageReducer';
 import { useEffect } from 'react';
 import { useFilmManage } from '../../../../store/filmManage/filmManageSelector';
 import { GROUPID } from '../../../../constants/api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditFilm = () => {
     const [componentSize, setComponentSize] = useState('default');
+
+    const param = useParams()
+    // console.log(param.movieId)
+    const { filmInfo } = useFilmManage();
+    // console.log('filmInfo', filmInfo)
+
     const [imgSrc, setImgSrc] = useState('')
     const dispatch = useDispatch()
-    const param = useParams()
-    console.log(param.movieId)
-    const { filmInfo } = useFilmManage();
-    console.log('filmInfo', filmInfo)
 
     useEffect(() => {
         dispatch(getFilmInfo(param.movieId))
     }, [])
 
+    const navigate = useNavigate()
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
+            maPhim: filmInfo.maPhim,
             tenPhim: filmInfo?.tenPhim,
             trailer: filmInfo?.trailer,
             moTa: filmInfo?.moTa,
-            ngayKhoiChieu: filmInfo?.ngayKhoiChieu,
+            ngayKhoiChieu: filmInfo.ngayKhoiChieu,
             dangChieu: filmInfo.dangChieu,
             sapChieu: filmInfo.sapChieu,
             hot: filmInfo.hot,
+            // maNhom: GROUPID,
             danhGia: filmInfo.danhGia,
             hinhAnh: null,
 
         },
         onSubmit: (values) => {
+            console.log('values', values)
+            values.maNhom = GROUPID
             const formData = new FormData()
             // formData.append('tenPhim', formik.values.tenPhim)
-            values.maNhom = GROUPID
+
             for (let key in values) {
                 if (key !== 'hinhAnh') {
                     formData.append(key, values[key])
                 } else {
-                    if (values.dangChieu.hinhAnh !== null) {
+                    if (values.hinhAnh !== null) {
                         formData.append('File', values.hinhAnh, values.hinhAnh.name)
                     }
                 }
             }
-            console.log('formik', formData.get('moTa'))
+            // console.log('formik', formData.get('moTa'))
+            dispatch(postFilmInfoChanged(formData))
+
+            alert('Updated Successfully!')
+
+            navigate('/admin/films')
 
         }
     })
@@ -85,21 +98,17 @@ const EditFilm = () => {
         }
     }
 
-    const handleChangeFile = (e) => {
+    const handleChangeFile = async (e) => {
         let file = e.target.files[0]
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png' || file.type === 'image.gif') {
+            await formik.setFieldValue('hinhAnh', file)
             let reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = (e) => {
-                // console.log(e.target.result
+                // console.log(e.target.result)
                 setImgSrc(e.target.result)
             }
-            formik.setFieldValue('hinhAnh', file)
-
-            // formik.setErrors()
         }
-
-
     }
 
 
@@ -133,7 +142,8 @@ const EditFilm = () => {
                         value={formik.values.moTa} />
                 </Form.Item>
                 <Form.Item label="Show time">
-                    <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
+                    <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker}
+                        value={moment(formik.values.ngayKhoiChieu)} />
                     {/* value={moment(formik.values.ngayKhoiChieu, "DD/MM/YYYY")} */}
                 </Form.Item>
                 <Form.Item label="Now Showing" valuePropName="checked">
@@ -141,10 +151,12 @@ const EditFilm = () => {
                         checked={formik.values.dangChieu} />
                 </Form.Item>
                 <Form.Item label="Coming Soon" valuePropName="checked">
-                    <Switch name="sapChieu" onChange={handleChangeSwitch('sapChieu')} checked={formik.values.sapChieu} />
+                    <Switch name="sapChieu" onChange={handleChangeSwitch('sapChieu')}
+                        checked={formik.values.sapChieu} />
                 </Form.Item>
                 <Form.Item label="Hot" valuePropName="checked">
-                    <Switch name="hot" onChange={handleChangeSwitch('hot')} checked={formik.values.hot} />
+                    <Switch name="hot" onChange={handleChangeSwitch('hot')}
+                        checked={formik.values.hot} />
                 </Form.Item>
                 <Form.Item label="Rating">
                     <InputNumber placeholder='10' onChange={handleChangeInputNumber('danhGia')} min={1} max={10}
@@ -155,7 +167,7 @@ const EditFilm = () => {
                     <br />
                     <img style={{ width: 150, height: 150 }} src={imgSrc === '' ? filmInfo.hinhAnh : imgSrc} alt='...' />
                 </Form.Item>
-                <Form.Item label="Submit">
+                <Form.Item label="Button">
                     <button type="submit" className='bg-blue-500 text-white p-2 btn_submit'>Edit film</button>
                 </Form.Item>
             </Form>

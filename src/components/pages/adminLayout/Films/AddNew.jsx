@@ -55,7 +55,7 @@ const AddNew = () => {
                     formData.append('File', values.hinhAnh, values.hinhAnh.name)
                 }
             }
-            console.log('formik', formData.get('moTa'))
+            // console.log('formik', formData.get('moTa'))
 
             //POST formData
             dispatch(postMovie(formData))

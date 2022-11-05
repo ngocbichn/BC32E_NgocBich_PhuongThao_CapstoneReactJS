@@ -15,6 +15,9 @@ export const filmManageServices = {
     },
     getFilmInfo: (movieId) => {
         return api.get(`QuanLyPhim/LayThongTinPhim?MaPhim=${movieId}`)
+    },
+    postFilmInfoChanged: (formData) => {
+        return api.post('QuanLyPhim/CapNhatPhimUpload', formData)
     }
 
 }

@@ -9,11 +9,8 @@ import Loading from './components/loading/Loading';
 function App() {
   return (
     <div>
-  
       <BrowserRouter>
-
-        <Routers>  
-        
+        <Routers>
           <Route />
         </Routers>
       </BrowserRouter>

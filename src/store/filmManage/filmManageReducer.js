@@ -8,8 +8,10 @@ const initialState = {
     isFetchingMD: false,
     movieDetail: undefined,
     isLoading: false,
+    errorMessage: null,
     filmInfo: {},
     isFetchingFilmInfo: false,
+    isLoadingFilmChanged: false,
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
@@ -70,6 +72,19 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
                 state.isFetchingFilmInfo = false
                 state.error = action.payload
             })
+            //POST filmInfoChanged
+            .addCase(postFilmInfoChanged.pending, (state, action) => {
+                state.isLoadingFilmChanged = true
+                state.errorMessage = null
+            })
+            .addCase(postFilmInfoChanged.fulfilled, (state, action) => {
+                state.isLoadingFilmChanged = false
+                state.errorMessage = action.payload
+            })
+            .addCase(postFilmInfoChanged.rejected, (state, action) => {
+                state.isLoadingFilmChanged = false
+                state.errorMessage = action.payload.message
+            })
     }
 })
 
@@ -122,6 +137,23 @@ export const getFilmInfo = createAsyncThunk(
             return result.data.content
         } catch (error) {
             return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+
+
+export const postFilmInfoChanged = createAsyncThunk(
+    'filmManage/postFilmInfoChanged',
+    async (formData, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await filmManageServices.postFilmInfoChanged(formData)
+            if (result.data.statusCode === 200) {
+                return result.data.content
+            }
+            dispatch(getFilmInfo())
+        } catch (error) {
+            return rejectWithValue(error)
         }
     }
 )
