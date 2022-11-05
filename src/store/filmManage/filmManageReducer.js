@@ -104,10 +104,9 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
 
 export const getMovieList = createAsyncThunk(
     'filmManage/getMovieList',
-    async (data, { dispatch, getState, rejectWithValue }) => {
+    async (tenPhim = "", { dispatch, getState, rejectWithValue }) => {
         try {
-            const value = getState().filmManageReducer
-            const result = await filmManageServices.getMovieList()
+            const result = await filmManageServices.getMovieList(tenPhim)
             return result.data.content
         } catch (error) {
             return rejectWithValue(error.response.data)

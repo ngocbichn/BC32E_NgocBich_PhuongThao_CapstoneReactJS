@@ -132,7 +132,11 @@ const Films = () => {
 
     const { Search } = Input;
 
-    const onSearch = (value) => console.log(value);
+    const onSearch = (value) => {
+        console.log(value)
+        //
+        dispatch(getMovieList(value))
+    };
 
     return (
         <Container className="admin_films pt-20">
@@ -144,9 +148,10 @@ const Films = () => {
             </Button>
             <div className="input_search my-20">
                 <Search
-                    placeholder="input search text"
+                    placeholder="Film name"
                     onSearch={onSearch}
                     enterButton
+
                 />
             </div>
             <Table
@@ -167,13 +172,19 @@ const Container = styled.div`
     .input_search {
         .ant-input-group > .ant-input:first-child, .ant-input-group-addon:first-child{
             border-color: #fad961;
+
+            
         }
+        .ant-input{
+                padding: 8px 14px;
+            }
       .ant-btn-primary {
         background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
         color: #fff;
         font-weight: 700;
         font-size: 16px;
         line-height: 10px;
+        height: 40px;
         border-radius: 4px;
         border: none;
         box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);

@@ -3,8 +3,11 @@ import { api, GROUPID } from "../constants/api"
 
 
 export const filmManageServices = {
-    getMovieList: () => {
-        return api.get('QuanLyPhim/LayDanhSachPhim?maNhom=GP06')
+    getMovieList: (tenPhim = '') => {
+        if (tenPhim.trim() !== '') {
+            return api.get(`QuanLyPhim/LayDanhSachPhim?maNhom=${GROUPID}&tenPhim=${tenPhim}`)
+        }
+        return api.get(`QuanLyPhim/LayDanhSachPhim?maNhom=${GROUPID}`)
     },
 
     getMovieDetail: (movieId) => {
