@@ -18,7 +18,9 @@ export const filmManageServices = {
     },
     postFilmInfoChanged: (formData) => {
         return api.post('QuanLyPhim/CapNhatPhimUpload', formData)
+    },
+    deleteFilm: (movieId) => {
+        return api.delete(`QuanLyPhim/XoaPhim?MaPhim=${movieId}`)
     }
-
 }
 

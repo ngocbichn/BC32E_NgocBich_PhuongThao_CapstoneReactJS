@@ -12,6 +12,7 @@ const initialState = {
     filmInfo: {},
     isFetchingFilmInfo: false,
     isLoadingFilmChanged: false,
+    isFetchingDeleteFilm: false,
 }
 
 export const { reducer: filmManageReducer, actions: filmManageAction } = createSlice({
@@ -85,6 +86,19 @@ export const { reducer: filmManageReducer, actions: filmManageAction } = createS
                 state.isLoadingFilmChanged = false
                 state.errorMessage = action.payload.message
             })
+            //delete film
+            .addCase(deleteFilm.pending, (state, action) => {
+                state.isFetchingDeleteFilm = true
+            })
+            .addCase(deleteFilm.fulfilled, (state, action) => {
+                state.isFetchingDeleteFilm = false
+                // state.movieDetail = action.payload
+
+            })
+            .addCase(deleteFilm.rejected, (state, action) => {
+                state.isFetchingDeleteFilm = false
+                state.error = action.payload
+            })
     }
 })
 
@@ -101,17 +115,19 @@ export const getMovieList = createAsyncThunk(
     }
 )
 
-export const getMovieDetail = createAsyncThunk('filmMange/getMovieDetail', async (movieId, { dispatch, getState, rejectWithValue }) => {
-    try {
-        const result = await filmManageServices.getMovieDetail(movieId)
-        return result.data.content
+export const getMovieDetail = createAsyncThunk(
+    'filmMange/getMovieDetail',
+    async (movieId, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await filmManageServices.getMovieDetail(movieId)
+            return result.data.content
 
-    } catch (error) {
-        return rejectWithValue(error.response.data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
 
-    }
+        }
 
-})
+    })
 
 export const postMovie = createAsyncThunk(
     'filmManage/postMovie',
@@ -148,6 +164,21 @@ export const postFilmInfoChanged = createAsyncThunk(
     async (formData, { dispatch, getState, rejectWithValue }) => {
         try {
             const result = await filmManageServices.postFilmInfoChanged(formData)
+            if (result.data.statusCode === 200) {
+                return result.data.content
+            }
+            dispatch(getFilmInfo())
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const deleteFilm = createAsyncThunk(
+    'filmManage/deleteFilm',
+    async (movieId, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await filmManageServices.deleteFilm(movieId)
             if (result.data.statusCode === 200) {
                 return result.data.content
             }

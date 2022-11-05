@@ -19,62 +19,52 @@ const Sidebar = () => {
                 <div className="divide-y divide-gray-300 sidebar_content">
                     <ul className="pt-2 pb-4 pl-14">
                         <li className="mb-26">
-                            <a
-                                rel="noopener noreferrer"
-                                href="#"
+                            <p
                                 className="flex items-center  rounded-md"
                             >
                                 <Link to="/admin/dashboard" className="font-bold tracking-widest uppercase text-gray-300 text-20">
                                     Dashboard
                                 </Link>
-                            </a>
+                            </p>
                         </li>
                         <li className="mb-10">
-                            <a
-                                rel="noopener noreferrer"
-                                href="#"
+                            <p
                                 className="flex items-center  rounded-md "
                             >
                                 <Link to="/admin/films" className="font-bold tracking-widest uppercase text-gray-300 text-20">
                                     Films
                                 </Link>
-                            </a>
+                            </p>
                         </li>
                         <li className="mb-10 pl-24">
-                            <a
-                                rel="noopener noreferrer"
-                                href="#"
+                            <p
                                 className="flex items-center  rounded-md "
                             >
 
                                 <Link to="/admin/films" className="font-medium tracking-widest  text-white text-16">
                                     Films
                                 </Link>
-                            </a>
+                            </p>
                         </li>
                         <li className="mb-26 pl-24">
-                            <a
-                                rel="noopener noreferrer"
-                                href="#"
+                            <p
                                 className="flex items-center  rounded-md "
                             >
 
                                 <Link to="/admin/films/addnew" className="font-medium tracking-widest  text-white text-16">
                                     Add New
                                 </Link>
-                            </a>
+                            </p>
                         </li>
                         <li className="mb-20">
-                            <a
-                                rel="noopener noreferrer"
-                                href="#"
+                            <p
                                 className="flex items-center rounded-md"
                             >
 
                                 <Link to="/admin/showtimes" className="font-bold tracking-widest uppercase text-gray-300 text-20">
                                     Showtimes
                                 </Link>
-                            </a>
+                            </p>
                         </li>
                     </ul>
 

@@ -59,6 +59,7 @@ const AddNew = () => {
 
             //POST formData
             dispatch(postMovie(formData))
+            alert('Added Successfully!')
         }
     })
 

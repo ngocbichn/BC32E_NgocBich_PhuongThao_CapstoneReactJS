@@ -5,7 +5,7 @@ import { Input, Space } from "antd";
 import styled from "styled-components";
 import { useFilmManage } from "../../../../store/filmManage/filmManageSelector";
 import { useEffect } from "react";
-import { getMovieList } from "../../../../store/filmManage/filmManageReducer";
+import { deleteFilm, getMovieList } from "../../../../store/filmManage/filmManageReducer";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 
@@ -104,13 +104,19 @@ const Films = () => {
                             </NavLink>
                         </div>
                         <div className="mr-10">
-                            <NavLink
+                            <span
                                 key={2}
+                                style={{ cursor: "pointer" }}
                                 className=" text-orange-700 text-30 p-2 hover:text-orange-200"
-                                to="/"
+                                onClick={() => {
+                                    if (window.confirm('Do you want to delete ' + film.tenPhim)) {
+                                        //action
+                                        dispatch(deleteFilm(film.maPhim))
+                                    }
+                                }}
                             >
                                 <DeleteFilled />
-                            </NavLink>
+                            </span>
                         </div>
                     </div>
                 );
@@ -148,6 +154,7 @@ const Films = () => {
                 columns={columns}
                 dataSource={data}
                 onChange={onChange}
+                rowKey={"maPhim"}
             />
         </Container>
     );
