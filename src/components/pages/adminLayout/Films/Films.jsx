@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Table } from "antd";
-import { AudioOutlined, EditFilled, DeleteFilled } from "@ant-design/icons";
+import { AudioOutlined, EditFilled, DeleteFilled, CalendarOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
 import styled from "styled-components";
 import { useFilmManage } from "../../../../store/filmManage/filmManageSelector";
@@ -97,7 +97,7 @@ const Films = () => {
                         <div className="mr-10">
                             <NavLink
                                 key={1}
-                                className=" text-orange-300 text-30 p-2 hover:text-orange-600"
+                                className=" text-yellow-400 text-30 p-2 hover:text-orange-600"
                                 to={`/admin/films/edit/${film.maPhim}`}
                             >
                                 <EditFilled />
@@ -107,7 +107,7 @@ const Films = () => {
                             <span
                                 key={2}
                                 style={{ cursor: "pointer" }}
-                                className=" text-orange-700 text-30 p-2 hover:text-orange-200"
+                                className=" text-orange-600 text-30 p-2 hover:text-orange-200"
                                 onClick={() => {
                                     if (window.confirm('Do you want to delete ' + film.tenPhim)) {
                                         //action
@@ -117,6 +117,16 @@ const Films = () => {
                             >
                                 <DeleteFilled />
                             </span>
+                        </div>
+                        <div className="mr-10">
+                            <NavLink
+                                key={1}
+                                className=" text-green-400 text-30 p-2 hover:text-green-600"
+                                to={`/admin/films/showtimes/${film.maPhim}/${film.tenPhim}`}
+                                onClick={() => { localStorage.setItem('filmParam', JSON.stringify(film)) }}
+                            >
+                                <CalendarOutlined />
+                            </NavLink>
                         </div>
                     </div>
                 );
@@ -144,7 +154,7 @@ const Films = () => {
                 Films Management
             </p>
             <Button>
-                <Link to="/admin/films/addnew" className="text-white">Add New</Link>
+                <Link to="/admin/films/addnew" className="text-white hover:text-white">Add New</Link>
             </Button>
             <div className="input_search my-20">
                 <Search
@@ -227,5 +237,6 @@ const Button = styled.button`
   transition: 0.4s ease;
   &:hover {
     opacity: 1;
+    color: #fff;
   }
 `;

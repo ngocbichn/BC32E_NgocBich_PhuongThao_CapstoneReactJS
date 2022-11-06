@@ -61,7 +61,7 @@ const HomeLayout = () => {
           key={index}
         >
           <Tabs tabPosition={tabPosition}>
-            {heThongRap.lstCumRap?.map((cumRap, index) => {
+            {heThongRap.lstCumRap?.slice(0, 5).map((cumRap, index) => {
               return (
                 <Tabs.TabPane
                   tab={
@@ -178,7 +178,7 @@ const HomeLayout = () => {
                       key={film.maPhim}
                       className="lg:w-1/4 md:w-1/2 p-7 w-full mb-16"
                     >
-                      <div className="relative h-96 rounded overflow-hidden">
+                      <div className="relative h-400 rounded overflow-hidden">
                         <img
                           style={{ cursor: "pointer" }}
                           alt={film.tenPhim}

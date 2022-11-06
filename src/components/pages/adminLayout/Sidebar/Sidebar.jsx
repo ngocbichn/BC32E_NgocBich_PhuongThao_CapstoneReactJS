@@ -31,6 +31,15 @@ const Sidebar = () => {
                             <p
                                 className="flex items-center  rounded-md "
                             >
+                                <Link to="/admin/users" className="font-bold tracking-widest uppercase text-gray-300 text-20">
+                                    USERS
+                                </Link>
+                            </p>
+                        </li>
+                        <li className="mb-10">
+                            <p
+                                className="flex items-center  rounded-md "
+                            >
                                 <Link to="/admin/films" className="font-bold tracking-widest uppercase text-gray-300 text-20">
                                     Films
                                 </Link>
@@ -53,16 +62,6 @@ const Sidebar = () => {
 
                                 <Link to="/admin/films/addnew" className="font-medium tracking-widest  text-white text-16">
                                     Add New
-                                </Link>
-                            </p>
-                        </li>
-                        <li className="mb-20">
-                            <p
-                                className="flex items-center rounded-md"
-                            >
-
-                                <Link to="/admin/showtimes" className="font-bold tracking-widest uppercase text-gray-300 text-20">
-                                    Showtimes
                                 </Link>
                             </p>
                         </li>

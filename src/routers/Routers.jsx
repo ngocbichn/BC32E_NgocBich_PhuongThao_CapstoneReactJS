@@ -13,6 +13,7 @@ import LogInPage from "../components/pages/userLayout/LogInPage";
 import SignUp from "../components/pages/userLayout/SignUp";
 import AddNew from "../components/pages/adminLayout/Films/AddNew"
 import EditFilm from "../components/pages/adminLayout/Films/EditFilm";
+import Users from "../components/pages/adminLayout/UsersManage/Users";
 
 
 const Routers = () => {
@@ -60,9 +61,10 @@ const Routers = () => {
           element: <EditFilm />
         },
         {
-          path: "/admin/showtimes",
+          path: "/admin/films/showtimes/:movieId/:movieName",
           element: <Showtimes />,
         },
+
       ]
     },
     {

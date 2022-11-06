@@ -34,6 +34,7 @@ module.exports = {
         90: '90px',
         100: '100px',
         120: '120px',
+        400: '400px',
       },
       fontSize: {
         1: '1px',
