@@ -75,7 +75,7 @@ const BookingTicket = () => {
 
   return <Container className="bookingPage">
     <div className="container">
-      <div className="">
+      <div>
 
         <div className="grid grid-cols-12">
           <div className="col-span-8">
@@ -178,22 +178,26 @@ const BookingTicket = () => {
 
 
 const App = () => {
-  const {tabActive} = useMovieBooking()
-  console.log('tabActive',tabActive)
+  const { tabActive } = useMovieBooking()
+  console.log('tabActive', tabActive)
   const dispatch = useDispatch()
-  
+
   return (
-    <div className=" tab p-5 ">
-      <Tabs defaultActiveKey={tabActive} activeKey={tabActive} className="text-white"  onTabClick={(key,event) =>  dispatch(movieBookingAction.tabSwitching(key))} >
-        <Tabs.TabPane tab="01. CHỌN GHẾ & THANH TOÁN" key="1">
-          
-          <BookingTicket />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="02. KẾT QUẢ ĐẶT VÉ" key="2">
-          <KetQuaDatVe />
-        </Tabs.TabPane>
-      </Tabs>
-    </div>
+    <Container className=" TabPage ant-tabs tab p-5 text-white ">
+      <div className="container">
+        <Tabs defaultActiveKey={tabActive} activeKey={tabActive} onTabClick={(key, event) => dispatch(movieBookingAction.tabSwitching(key))} >
+          <Tabs.TabPane tab="01. CHỌN GHẾ & THANH TOÁN" key="1">
+
+            <BookingTicket />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="02. KẾT QUẢ ĐẶT VÉ" key="2">
+            <KetQuaDatVe />
+          </Tabs.TabPane>
+        </Tabs>
+
+      </div>
+    </Container>
+
 
   )
 };
@@ -227,7 +231,7 @@ const KetQuaDatVe = () => {
                       <h2 className="text-orange-400 title-font font-medium">{item.tenPhim}</h2>
                       <p className="text-white mb-0">Ngày chiếu: {moment(item.ngayDat).format('dd-mm-yyyy')} - Giờ chiếu: {moment(item.ngayDat).format('hh:mm:ss')}</p>
                       <p className="mb-0">Địa điểm: <br /> - {seatList.tenHeThongRap}  </p>
-                      <p className="mb-0">- {seatList.tenCumRap} - Ghế: {item.danhSachGhe.map((ghe,index) => {
+                      <p className="mb-0">- {seatList.tenCumRap} - Ghế: {item.danhSachGhe.map((ghe, index) => {
                         return <span key={index}> {ghe.tenGhe}</span>
 
                       })}</p>
@@ -254,9 +258,10 @@ export default App;
 const Container = styled.div`
 &.bookingPage {
   .container {
-    padding-top: 25px;
-max-width: 1280px;
-margin: auto;
+    max-width: 1280px;
+      padding: 15px;
+      margin: auto;
+
 
 .screen {
   border-bottom: 50px solid #ffffff;
@@ -297,8 +302,23 @@ margin: auto;
 
 }
 
+
+
   }
  
+
+}
+
+&.TabPage {
+
+  .ant-tabs {
+        color: white !important;
+    }
+
+    .container {
+    max-width: 1280px;
+      padding: 15px;
+      margin: auto;
 
 }
 `

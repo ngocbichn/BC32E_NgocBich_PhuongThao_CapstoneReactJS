@@ -7,5 +7,8 @@ export const userManageService = {
     }, 
     getBookingHistory: () => {
         return api.post('QuanLyNguoiDung/ThongTinTaiKhoan')
+    },
+    signUp: (clientInfo) => {
+        return api.post('QuanLyNguoiDung/DangKy',clientInfo)
     }
 }

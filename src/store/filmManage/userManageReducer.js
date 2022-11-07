@@ -91,4 +91,16 @@ export const getBookingHistory = createAsyncThunk('userMange/bookingHistory', as
     }
 })
 
+export const signUpAction = createAsyncThunk('userManage/signup', async(clientInfo, {dispatch,getState,rejectWithValue}) => {
+    try {
+        const result = await userManageService.signUp(clientInfo)
+
+        return result.data.content
+        
+    } catch (error) {
+        return rejectWithValue(error)
+        
+    }
+})
+
 
