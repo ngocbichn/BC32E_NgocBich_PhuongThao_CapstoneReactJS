@@ -20,14 +20,21 @@ const LogInPage = () => {
       console.log('values', values)
       dispatch(userLoginAction(values))
         .then(() => {
-          navigate(-1)
+          if (isLoggin) {
+            navigate(-1)
+          }    
+          
         })
 
     },
   });
 
+ 
+
   const { userLogin, isLoggin } = useUserManage()
-  console.log(userLogin)
+  console.log(userLogin?.response?.data.content)
+
+
   console.log(isLoggin)
 
 
@@ -54,18 +61,20 @@ const LogInPage = () => {
   }} className=" min-h-screen flex flex-col justify-center sm:py-12">
     <div className=" p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
       <h1 className="font-bold text-center text-3xl mb-5">WELCOME TO MOVIE </h1>
+      <p className='text-orange-400 text-center'>Hãy đăng nhập để đặt vé</p>
       <div className=" bg-gray-100 shadow w-full rounded-lg divide-y divide-gray-200">
         <div className="p-[40px]">
           <label className="font-semibold text-sm text-gray-600 pb-[16px] block">Tài khoản</label>
           <input name='taiKhoan' onChange={formik.handleChange} type="text" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-black pb-[16px]" />
           <label className="font-semibold text-sm text-gray-600 pb-[16px] block">Mật Khẩu</label>
           <input type="password" name='matKhau' onChange={formik.handleChange} className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-black pb-[16px]" />
-          <button type="submit" className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block mt-[24px]">
+          <p className='text-red-500 mt-[12px]'>{userLogin?.response?.data.content}</p>
+          <Button type="submit" className=" inline-block mt-[16px]">
             <span className="inline-block mr-2">Đăng nhập</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </button>
+          </Button>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-3 gap-1">
@@ -132,3 +141,22 @@ const Container = styled.div`
       }
     }
 `
+
+const Button = styled.button`
+  background-image: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgb(255 88 96 / 50%);
+  opacity: 0.85;
+  transition: 0.4s ease;
+  &:hover {
+    opacity: 1;
+
+    
+  }
+`;

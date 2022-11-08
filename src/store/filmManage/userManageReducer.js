@@ -5,6 +5,7 @@ import { userManageService } from "../../services/userManageService"
 
 
 
+
 let user = {
 
 }
@@ -81,7 +82,7 @@ export const userLoginAction = createAsyncThunk('/userManage/userLogin', async(u
 export const getBookingHistory = createAsyncThunk('userMange/bookingHistory', async (_,{dispatch, getState,rejectWithValue}) => {
     try {
         const result = await userManageService.getBookingHistory()
-        console.log('A',result.data.content)
+        // console.log('A',result.data.content)
 
         return result.data.content
         
